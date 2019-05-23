@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xskq.mybatis.KaoMapper" >
+  <resultMap id="BaseResultMap" type="com.xskq.model.Kao" >
+    <id column="kaoid" property="kaoid" jdbcType="INTEGER" />
+    <result column="stunumber" property="stunumber" jdbcType="VARCHAR" />
+    <result column="stuname" property="stuname" jdbcType="VARCHAR" />
+    <result column="courseid" property="courseid" jdbcType="INTEGER" />
+    <result column="adate" property="adate" jdbcType="VARCHAR" />
+    <result column="banji" property="banji" jdbcType="VARCHAR" />
+    <result column="qin" property="qin" jdbcType="VARCHAR" />
+    <result column="sid" property="sid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    kaoid, stunumber, stuname, courseid, adate, banji, qin, sid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from kao
+    where kaoid = #{kaoid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from kao
+    where kaoid = #{kaoid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xskq.model.Kao" >
+    insert into kao (kaoid, stunumber, stuname, 
+      courseid, adate, banji, 
+      qin, sid)
+    values (#{kaoid,jdbcType=INTEGER}, #{stunumber,jdbcType=VARCHAR}, #{stuname,jdbcType=VARCHAR}, 
+      #{courseid,jdbcType=INTEGER}, #{adate,jdbcType=VARCHAR}, #{banji,jdbcType=VARCHAR}, 
+      #{qin,jdbcType=VARCHAR}, #{sid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xskq.model.Kao" >
+    insert into kao
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="kaoid != null" >
+        kaoid,
+      </if>
+      <if test="stunumber != null" >
+        stunumber,
+      </if>
+      <if test="stuname != null" >
+        stuname,
+      </if>
+      <if test="courseid != null" >
+        courseid,
+      </if>
+      <if test="adate != null" >
+        adate,
+      </if>
+      <if test="banji != null" >
+        banji,
+      </if>
+      <if test="qin != null" >
+        qin,
+      </if>
+      <if test="sid != null" >
+        sid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="kaoid != null" >
+        #{kaoid,jdbcType=INTEGER},
+      </if>
+      <if test="stunumber != null" >
+        #{stunumber,jdbcType=VARCHAR},
+      </if>
+      <if test="stuname != null" >
+        #{stuname,jdbcType=VARCHAR},
+      </if>
+      <if test="courseid != null" >
+        #{courseid,jdbcType=INTEGER},
+      </if>
+      <if test="adate != null" >
+        #{adate,jdbcType=VARCHAR},
+      </if>
+      <if test="banji != null" >
+        #{banji,jdbcType=VARCHAR},
+      </if>
+      <if test="qin != null" >
+        #{qin,jdbcType=VARCHAR},
+      </if>
+      <if test="sid != null" >
+        #{sid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xskq.model.Kao" >
+    update kao
+    <set >
+      <if test="stunumber != null" >
+        stunumber = #{stunumber,jdbcType=VARCHAR},
+      </if>
+      <if test="stuname != null" >
+        stuname = #{stuname,jdbcType=VARCHAR},
+      </if>
+      <if test="courseid != null" >
+        courseid = #{courseid,jdbcType=INTEGER},
+      </if>
+      <if test="adate != null" >
+        adate = #{adate,jdbcType=VARCHAR},
+      </if>
+      <if test="banji != null" >
+        banji = #{banji,jdbcType=VARCHAR},
+      </if>
+      <if test="qin != null" >
+        qin = #{qin,jdbcType=VARCHAR},
+      </if>
+      <if test="sid != null" >
+        sid = #{sid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where kaoid = #{kaoid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xskq.model.Kao" >
+    update kao
+    set stunumber = #{stunumber,jdbcType=VARCHAR},
+      stuname = #{stuname,jdbcType=VARCHAR},
+      courseid = #{courseid,jdbcType=INTEGER},
+      adate = #{adate,jdbcType=VARCHAR},
+      banji = #{banji,jdbcType=VARCHAR},
+      qin = #{qin,jdbcType=VARCHAR},
+      sid = #{sid,jdbcType=VARCHAR}
+    where kaoid = #{kaoid,jdbcType=INTEGER}
+  </update>
+</mapper>

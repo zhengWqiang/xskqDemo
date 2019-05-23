@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xskq.mybatis.QingMapper" >
+  <resultMap id="BaseResultMap" type="com.xskq.model.Qing" >
+    <id column="qingid" property="qingid" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="courseid" property="courseid" jdbcType="INTEGER" />
+    <result column="adate" property="adate" jdbcType="VARCHAR" />
+    <result column="info" property="info" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="teacherid" property="teacherid" jdbcType="INTEGER" />
+    <result column="banji" property="banji" jdbcType="VARCHAR" />
+    <result column="fujian" property="fujian" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    qingid, name, courseid, adate, info, state, teacherid, banji, fujian
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from qing
+    where qingid = #{qingid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from qing
+    where qingid = #{qingid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xskq.model.Qing" >
+    insert into qing (qingid, name, courseid, 
+      adate, info, state, 
+      teacherid, banji, fujian
+      )
+    values (#{qingid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{courseid,jdbcType=INTEGER}, 
+      #{adate,jdbcType=VARCHAR}, #{info,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, 
+      #{teacherid,jdbcType=INTEGER}, #{banji,jdbcType=VARCHAR}, #{fujian,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xskq.model.Qing" >
+    insert into qing
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="qingid != null" >
+        qingid,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="courseid != null" >
+        courseid,
+      </if>
+      <if test="adate != null" >
+        adate,
+      </if>
+      <if test="info != null" >
+        info,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="teacherid != null" >
+        teacherid,
+      </if>
+      <if test="banji != null" >
+        banji,
+      </if>
+      <if test="fujian != null" >
+        fujian,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="qingid != null" >
+        #{qingid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="courseid != null" >
+        #{courseid,jdbcType=INTEGER},
+      </if>
+      <if test="adate != null" >
+        #{adate,jdbcType=VARCHAR},
+      </if>
+      <if test="info != null" >
+        #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherid != null" >
+        #{teacherid,jdbcType=INTEGER},
+      </if>
+      <if test="banji != null" >
+        #{banji,jdbcType=VARCHAR},
+      </if>
+      <if test="fujian != null" >
+        #{fujian,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xskq.model.Qing" >
+    update qing
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="courseid != null" >
+        courseid = #{courseid,jdbcType=INTEGER},
+      </if>
+      <if test="adate != null" >
+        adate = #{adate,jdbcType=VARCHAR},
+      </if>
+      <if test="info != null" >
+        info = #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherid != null" >
+        teacherid = #{teacherid,jdbcType=INTEGER},
+      </if>
+      <if test="banji != null" >
+        banji = #{banji,jdbcType=VARCHAR},
+      </if>
+      <if test="fujian != null" >
+        fujian = #{fujian,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where qingid = #{qingid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xskq.model.Qing" >
+    update qing
+    set name = #{name,jdbcType=VARCHAR},
+      courseid = #{courseid,jdbcType=INTEGER},
+      adate = #{adate,jdbcType=VARCHAR},
+      info = #{info,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      teacherid = #{teacherid,jdbcType=INTEGER},
+      banji = #{banji,jdbcType=VARCHAR},
+      fujian = #{fujian,jdbcType=VARCHAR}
+    where qingid = #{qingid,jdbcType=INTEGER}
+  </update>
+</mapper>
