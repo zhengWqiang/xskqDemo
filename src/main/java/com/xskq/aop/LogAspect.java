@@ -15,7 +15,7 @@ public class LogAspect {
 	}
 	public void after(JoinPoint joinPoint){
 		System.out.println("-----------after-----------------");
-		System.out.println("参数:");
+		System.out.println("鍙傛暟:");
 		Object[] args = joinPoint.getArgs();
 		for (int i = 0; i < args.length && args!=null; i++) {
 			if(i == args.length -1){
@@ -28,6 +28,6 @@ public class LogAspect {
 		System.out.println("---------------------------------");
 	}
 	public void afterReturn(JoinPoint joinPoint, Object result){
-		System.out.println("执行结果:"+result);
+		System.out.println("鎵ц缁撴灉:"+result);
 	}
 }
