@@ -5,7 +5,7 @@
          http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
   <display-name>Archetype Created Web Application</display-name>
   <welcome-file-list>
-    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>login.jsp</welcome-file>
   </welcome-file-list>
 
   <!-- SpringMVC核心Servlet -->
@@ -45,6 +45,15 @@
     <filter-name>encodingFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+
+  <!--<filter>
+    <filter-name>loginfilter</filter-name>
+    <filter-class>com.xskq.filter.LoginFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>loginfilter</filter-name>
+    <url-pattern>/admin/*</url-pattern>
+  </filter-mapping>-->
 
 <!--  <filter>
     <filter-name>charsetfilter</filter-name>

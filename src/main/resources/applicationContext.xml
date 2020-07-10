@@ -64,13 +64,16 @@
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
 
-    <!--1.使用AOP的方式实现事务的配置-->
     <!-- 配置事务管理器 -->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource" />
     </bean>
+    <!--1.注解式事务配置-->
+    <!--使用annotation定义事务 -->
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+    <!--2.使用AOP的方式实现事务的配置-->
     <!--配置事物-通知  -->
-    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+    <!--<tx:advice id="txAdvice" transaction-manager="transactionManager">
         <tx:attributes>
             <tx:method name="add*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
             <tx:method name="insert*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
@@ -78,28 +81,20 @@
             <tx:method name="edit*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
             <tx:method name="update*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
         </tx:attributes>
-    </tx:advice>
-
-    <bean id="logAspect" class="com.xskq.aop.LogAspect"/>
+    </tx:advice>-->
+    <!--<bean id="logAspect" class="com.xskq.aop.LogAspect"/>-->
     <!-- 配置事物-切面 -->
-    <aop:config>
-        <!-- 切入点表达式 -->
-        <!--其中第一个*代表返回值，第二*代表service下子包，第三个*代表方法名，“（..）”代表方法参数-->
+    <!--<aop:config>
+        &lt;!&ndash; 切入点表达式 &ndash;&gt;
+        &lt;!&ndash;其中第一个*代表返回值，第二*代表service下子包，第三个*代表方法名，“（..）”代表方法参数&ndash;&gt;
         <aop:pointcut id="txPoint" expression="execution(* com.xskq.service.*.*(..))"/>
-        <!--<aop:pointcut id="" expression="execution(* com.xskq.service..*(..))"></aop:pointcut>-->
-        <!-- 切面 -->
+        &lt;!&ndash;<aop:pointcut id="" expression="execution(* com.xskq.service..*(..))"></aop:pointcut>&ndash;&gt;
+        &lt;!&ndash; 切面 &ndash;&gt;
         <aop:advisor advice-ref="txAdvice" pointcut-ref="txPoint"/>
         <aop:aspect id="logAop" ref="logAspect">
             <aop:before method="before" pointcut-ref="txPoint"/>
             <aop:after method="after" pointcut-ref="txPoint"/>
             <aop:after-returning method="afterReturn" returning="result" pointcut-ref="txPoint"/>
         </aop:aspect>
-    </aop:config>
-
-    <!--2.注解式事务配置-->
-    <!--<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource" />
-    </bean>-->
-    <!-- 使用annotation定义事务 -->
-    <!--<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>-->
+    </aop:config>-->
 </beans>
