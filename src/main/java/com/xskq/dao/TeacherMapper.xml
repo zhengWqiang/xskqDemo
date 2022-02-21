@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.xskq.mybatis.TeacherMapper" >
+<mapper namespace="com.xskq.dao.TeacherMapper" >
   <resultMap id="BaseResultMap" type="com.xskq.model.Teacher" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="number" property="number" jdbcType="VARCHAR" />
@@ -125,4 +125,9 @@
       rdate = #{rdate,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectTeacher" resultMap="BaseResultMap" parameterType="com.xskq.model.Teacher" >
+    select * from teacher
+    where number = #{number,jdbcType=VARCHAR}
+    and password = #{password,jdbcType=VARCHAR}
+  </select>
 </mapper>

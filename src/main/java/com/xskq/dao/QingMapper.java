@@ -1,4 +1,4 @@
-package com.xskq.mybatis;
+package com.xskq.dao;
 
 import com.xskq.model.Qing;
 

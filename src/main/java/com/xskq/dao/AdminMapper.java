@@ -1,8 +1,11 @@
-package com.xskq.mybatis;
+package com.xskq.dao;
 
 import com.xskq.model.Admin;
 
+import java.util.List;
+
 public interface AdminMapper {
+
     int deleteByPrimaryKey(Integer id);
 
     int insert(Admin record);
@@ -14,4 +17,8 @@ public interface AdminMapper {
     int updateByPrimaryKeySelective(Admin record);
 
     int updateByPrimaryKey(Admin record);
+
+    Admin selectAdmin(Admin admin);
+
+    List<Admin> getAdmin();
 }

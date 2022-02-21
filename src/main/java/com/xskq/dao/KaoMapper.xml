@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.xskq.mybatis.KaoMapper" >
+<mapper namespace="com.xskq.dao.KaoMapper" >
   <resultMap id="BaseResultMap" type="com.xskq.model.Kao" >
     <id column="kaoid" property="kaoid" jdbcType="INTEGER" />
     <result column="stunumber" property="stunumber" jdbcType="VARCHAR" />

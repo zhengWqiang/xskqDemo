@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.xskq.mybatis.AdminMapper" >
+<mapper namespace="com.xskq.dao.AdminMapper" >
   <resultMap id="BaseResultMap" type="com.xskq.model.Admin" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="userName" property="username" jdbcType="VARCHAR" />
@@ -68,4 +68,12 @@
       userPw = #{userpw,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectAdmin" resultMap="BaseResultMap" parameterType="com.xskq.model.Admin" >
+    select * from admin
+    where userName = #{username,jdbcType=VARCHAR}
+    and userPw = #{userpw,jdbcType=VARCHAR}
+  </select>
+  <select id="getAdmin" resultMap="BaseResultMap" >
+    select * from admin
+  </select>
 </mapper>

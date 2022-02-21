@@ -1,4 +1,4 @@
-package com.xskq.mybatis;
+package com.xskq.dao;
 
 import com.xskq.model.Teacher;
 
@@ -14,4 +14,6 @@ public interface TeacherMapper {
     int updateByPrimaryKeySelective(Teacher record);
 
     int updateByPrimaryKey(Teacher record);
+
+    Teacher selectTeacher(Teacher teacher);
 }
