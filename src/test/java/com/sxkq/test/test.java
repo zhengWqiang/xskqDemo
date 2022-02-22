@@ -1,4 +1,4 @@
-package xskq.test;
+package com.sxkq.test;
 
 import com.xskq.dao.AdminMapper;
 import com.xskq.model.Admin;
