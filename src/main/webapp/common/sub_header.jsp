@@ -32,8 +32,7 @@ function up() {
 		width : 400,
 		height : 200
 	});
-	
-	pop.setContent("contentUrl", "&lt;%=path%>/upload/upload.jsp");
+	pop.setContent("contentUrl", "<%=path%>/upload/upload.jsp");
 	pop.setContent("title", "文件上传");
 	pop.build();
 	pop.show();

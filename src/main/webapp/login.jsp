@@ -1,32 +1,36 @@
-<%@include file="/common/sub_header.jsp"%>
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@include file="/common/sub_header.jsp" %>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
-
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>考勤管理系统</title>
 
     <script src="<%=path %>/ncss/js/cloud.js" type="text/javascript"></script>
-    <link href="<%=path %>/ncss/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="<%=path %>/ncss/css/style.css" rel="stylesheet" type="text/css"/>
     <script language="javascript">
-        if(top.location!=self.location){
-            top.location="${pageContext.request.contextPath}/login.jsp";
+        console.log("top.location:" + top.location);
+        console.log("self.location" + self.location);
+        console.log("path:" + "${pageContext.request.contextPath}/login.jsp");
+        console.log("path:" + "<%=request.getContextPath()%>/login.jsp");
+        if (top.location != self.location) {
+            top.location = "${pageContext.request.contextPath}/login.jsp";
         }
-        $(function() {
-            $('.loginbox').css( {
-                'position' : 'absolute',
-                'left' : ($(window).width() - 692) / 2
+        $(function () {
+            $('.loginbox').css({
+                'position': 'absolute',
+                'left': ($(window).width() - 692) / 2
             });
-            $(window).resize(function() {
-                $('.loginbox').css( {
-                    'position' : 'absolute',
-                    'left' : ($(window).width() - 692) / 2
+            $(window).resize(function () {
+                $('.loginbox').css({
+                    'position': 'absolute',
+                    'left': ($(window).width() - 692) / 2
                 });
             });
         });
+
         function login() {
             debugger;
             var username = $("#username").val();
@@ -34,26 +38,25 @@
             /* var type = $("input[type='radio']:checked").val(); */
             /* var type = $("input[name='type']:checked").val(); */
             var type = $('input:radio:checked').val();
-            /* alert(type); */
-            if(username==""){
+            if (username == "") {
                 /* document.getElementById("warn").innerHTML = "用户名不能为空"; */
                 $("#warn").html("用户名不能为空");
                 return;
             }
-            if(password==""){
+            if (password == "") {
                 document.getElementById("warn").innerHTML = "密码不能为空";
                 return;
-            }else{
+            } else {
                 $.ajax({
-                    type : "get",
+                    type: "post",
                     dataType: "json",
                     url: "${pageContext.request.contextPath }/login/doLogin",
-                    data : {
-                        "username" : username,
-                        "userpwd" : password,
-                        "type" : type
+                    data: {
+                        "username": username,
+                        "userpwd": password,
+                        "type": type
                     },
-                    success : function(data) {
+                    success: function (data) {
                         /* alert(data); */
                         /* var obj = $.parseJSON(json);  //使用这个方法解析json
                         alert(obj);
@@ -64,16 +67,18 @@
                             document.getElementById("warn").innerHTML = data.warn;
                             document.getElementById("userpwd").value = "";
                         } else {
-                            window.location.href = "&lt;%=path %>/index/index.jsp";
+                            console.log("<%=path %>/index/index.jsp");
+                            window.location.href = "<%=path %>/index/index.jsp";
                         }
                     },
-                    error : function(a) {
-                        alert("Error!"+a);
+                    error: function (a) {
+                        alert("Error!" + a);
                     }
                 });
             }
         }
-        function lableReset(){
+
+        function lableReset() {
             document.getElementById("warn").innerHTML = "";
         }
     </script>
@@ -88,21 +93,21 @@
 </div>
 <div class="loginbody">
     <span class="systemlogo"></span>
-    <form  method="post">
+    <form method="post">
         <div class="loginbox">
             <ul>
                 <li>
                     <input name="username" id="username" type="text" class="loginuser"
-                           onclick="lableReset()"  /><br/>
+                           onclick="lableReset()"/><br/>
                 </li>
                 <li>
-                    <input name="userpwd"  id="userpwd" type="password" class="loginpwd"
-                           onclick="lableReset()" /><br/>
+                    <input name="userpwd" id="userpwd" type="password" class="loginpwd"
+                           onclick="lableReset()"/><br/>
                 </li>
                 <li>
-                    <input name="admin" id="admin" type="radio" value=1/>管理员&nbsp; &nbsp;
-                    <input name="teacher" id="teacher" type="radio" value=2/>老师&nbsp; &nbsp;
-                    <input name="student" id="student" type="radio" value=3 checked="checked"/>学生
+                    <input name="radio" id="admin" type="radio" value="1" />管理员&nbsp; &nbsp;
+                    <input name="radio" id="teacher" type="radio" value="2" />老师&nbsp; &nbsp;
+                    <input name="radio" id="student" type="radio" value="3" checked="checked"/>学生
                     <label id="warn"></label>
                     <%--<select  name="type"  id="type" >
                        <option value="管理员">管理员</option>

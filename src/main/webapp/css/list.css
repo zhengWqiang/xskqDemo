@@ -2,7 +2,7 @@ ul{display:block;margin:0;padding:0;list-style:none;}
 li{display:block;margin:0;padding:0;list-style: none;}
 img{border:0;}
 .toolbar{float:left;}
-.toolbar li{background:url(../images/toolbg.gif) repeat-x; line-height:33px; height:33px; border:solid 1px #d3dbde; float:left; padding-right:10px; margin-right:5px;border-radius: 3px; behavior:url(js/pie.htc); cursor:pointer;}
+.toolbar li{background:url(../ncss/images/toolbg.gif) repeat-x; line-height:33px; height:33px; border:solid 1px #d3dbde; float:left; padding-right:10px; margin-right:5px;border-radius: 3px; behavior:url(js/pie.htc); cursor:pointer;}
 .toolbar li span{float:left; margin-left:10px; margin-right:5px; margin-top:5px;}
 
 
@@ -111,7 +111,7 @@ A.navlink:hover {
 }
 
 TD.forumHeaderBackgroundAlternate {
-	BACKGROUND-IMAGE: url(images/admin_top_bg.gif);
+	BACKGROUND-IMAGE: url(../ncss/images/admin_top_bg.gif);
 	COLOR: #000000;
 	BACKGROUND-COLOR: #799ae1
 }
@@ -147,17 +147,17 @@ TD.forumRow {
 TH {
 	FONT-WEIGHT: bold;
 	FONT-SIZE: 12px;
-	BACKGROUND-IMAGE: url(images/content-bg2.jpg);
+	BACKGROUND-IMAGE: url(../ncss/images/content-bg2.jpg);
 	COLOR: white;
 	BACKGROUND-COLOR: #4455aa
 }
 
 TD.bodytitle {
-	BACKGROUND-IMAGE: url(images/admin_bg_2.gif)
+	BACKGROUND-IMAGE: url(../ncss/images/admin_bg_2.gif)
 }
 
 TD.bodytitle1 {
-	BACKGROUND-IMAGE: url(images/admin_bg_3.gif)
+	BACKGROUND-IMAGE: url(../ncss/images/admin_bg_3.gif)
 }
 
 TD.tablebody1 {
@@ -179,7 +179,7 @@ TD.forumRowHighLight {
 TD.TitleHighlight {
 	PADDING-RIGHT: 3px;
 	PADDING-LEFT: 3px;
-	BACKGROUND: #35a2ee url("images/title_bg1.jpg") repeat left top;
+	BACKGROUND: #35a2ee url("../ncss/images/title_bg1.jpg") repeat left top;
 	PADDING-BOTTOM: 3px;
 	PADDING-TOP: 3px;
 	color: #095363;
@@ -405,7 +405,7 @@ a.od {
 	position: relative;
 	width: 150px;
 	height: 44px;
-	background: url("images/pre_bg.png") no-repeat left top;
+	background: url("../ncss/images/pre_bg.png") no-repeat left top;
 	left: -10px;
 	top: 60px;
 	z-index: 1000;
