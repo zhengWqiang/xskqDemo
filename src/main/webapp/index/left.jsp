@@ -14,9 +14,7 @@
     <title>无标题文档</title>
     <link href="<%=path%>/ncss/css/style.css" rel="stylesheet"
           type="text/css"/>
-    <script language="JavaScript" src="<%=path%>/ncss/js/jquery.js">
-    </script>
-
+    <script language="JavaScript" src="<%=path%>/ncss/js/jquery.js" type="text/javascript"></script>
     <script type="text/javascript">
         $(function () {
             //导航切换
@@ -36,7 +34,6 @@
             });
         })
     </script>
-
 </head>
 <body style="background: #f0f9fd;">
 <div class="lefttop">
@@ -91,7 +88,6 @@
             </ul>
         </dd>
     </c:if>
-
     <c:if test="${type=='老师'}">
         <dd>
             <div class="title">

@@ -67,17 +67,16 @@
                             document.getElementById("warn").innerHTML = data.warn;
                             document.getElementById("userpwd").value = "";
                         } else {
-                            console.log("<%=path %>/index/index.jsp");
-                            window.location.href = "<%=path %>/index/index.jsp";
+                            window.location.href="${pageContext.request.contextPath}/goIndex";
                         }
                     },
-                    error: function (a) {
-                        alert("Error!" + a);
+                    error: function (e) {
+                        console.log("数据获取失败:" + e);
+                        alert("Error!" + e);
                     }
                 });
             }
         }
-
         function lableReset() {
             document.getElementById("warn").innerHTML = "";
         }
@@ -105,8 +104,8 @@
                            onclick="lableReset()"/><br/>
                 </li>
                 <li>
-                    <input name="radio" id="admin" type="radio" value="1" />管理员&nbsp; &nbsp;
-                    <input name="radio" id="teacher" type="radio" value="2" />老师&nbsp; &nbsp;
+                    <input name="radio" id="admin" type="radio" value="1"/>管理员&nbsp; &nbsp;
+                    <input name="radio" id="teacher" type="radio" value="2"/>老师&nbsp; &nbsp;
                     <input name="radio" id="student" type="radio" value="3" checked="checked"/>学生
                     <label id="warn"></label>
                     <%--<select  name="type"  id="type" >
