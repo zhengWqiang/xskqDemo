@@ -1,5 +1,6 @@
 package com.xskq.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.xskq.model.Admin;
 import com.xskq.model.Student;
 import com.xskq.model.Teacher;
@@ -31,9 +32,13 @@ public class LoginController {
     private LoginService loginService;
 
     @RequestMapping(value = "/goIndex")
-    public ModelAndView goIndex(Map<String, Object> map) {
+    public ModelAndView goIndex(String userJson) {
+        Map<String, Object> map = JSON.parseObject(userJson);
         ModelAndView mv = new ModelAndView("index/index");
-        mv.addObject("map", map);
+        mv.addObject("id", map.get("id"));
+        mv.addObject("username", map.get("username"));
+        mv.addObject("user", map.get("user"));
+        mv.addObject("type", map.get("type"));
         return mv;
     }
 
