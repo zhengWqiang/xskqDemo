@@ -67,12 +67,7 @@
                             document.getElementById("warn").innerHTML = data.warn;
                             document.getElementById("userpwd").value = "";
                         } else {
-                            let userJson = JSON.stringify(data);
-                            document.write("<form action='${pageContext.request.contextPath }/login/goIndex' method=post name=form style='display:none'>");
-                            document.write("<input type=hidden name='userJson' value='"+userJson+"' />");//参数1
-                            document.write("</form>");
-                            document.form.submit();
-                            //window.location.href = "${pageContext.request.contextPath}/login/goIndex?userJson=" + JSON.stringify(data);
+                            window.location.href = "${pageContext.request.contextPath}/login/goIndex";
                         }
                     },
                     error: function (e) {

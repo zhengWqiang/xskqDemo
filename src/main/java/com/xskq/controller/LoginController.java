@@ -9,8 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,13 +36,14 @@ public class LoginController {
     private LoginService loginService;
 
     @RequestMapping(value = "/goIndex")
-    public ModelAndView goIndex(String userJson) {
-        Map<String, Object> map = JSON.parseObject(userJson);
+    public ModelAndView goIndex() {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        HttpSession session = request.getSession();
         ModelAndView mv = new ModelAndView("index/index");
-        mv.addObject("id", map.get("id"));
-        mv.addObject("username", map.get("username"));
-        mv.addObject("user", map.get("user"));
-        mv.addObject("type", map.get("type"));
+        mv.addObject("id", session.getAttribute("id"));
+        mv.addObject("username", session.getAttribute("username"));
+        mv.addObject("user", session.getAttribute("user"));
+        mv.addObject("type", session.getAttribute("type"));
         return mv;
     }
 
@@ -53,16 +58,18 @@ public class LoginController {
     public Object doLogin(String username, String userpwd, Short type) {
         String warn;
         Map<String, Object> map = new HashMap<>();
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        HttpSession session = request.getSession();
         if (type == 1) {
             Admin admin = new Admin();
             admin.setUsername(username);
             admin.setUserpw(userpwd);
             Admin a = loginService.selectAdmin(admin);
             if (a != null) {
-                map.put("id", a.getId());
-                map.put("username", a.getUsername());
-                map.put("user", a.getUsername());
-                map.put("type", "管理员");
+                session.setAttribute("id", a.getId());
+                session.setAttribute("username", a.getUsername());
+                session.setAttribute("user", a.getUsername());
+                session.setAttribute("type", "管理员");
             } else {
                 warn = "用户名或密码错误";
                 map.put("warn", warn);
@@ -73,10 +80,10 @@ public class LoginController {
             teacher.setPassword(userpwd);
             Teacher t = loginService.selectTeacher(teacher);
             if (t != null) {
-                map.put("id", t.getId());
-                map.put("username", t.getNumber());
-                map.put("user", t.getName());
-                map.put("type", "老师");
+                session.setAttribute("id", t.getId());
+                session.setAttribute("username", t.getNumber());
+                session.setAttribute("user", t.getName());
+                session.setAttribute("type", "老师");
                 return map;
             } else {
                 warn = "用户名或密码错误";
@@ -88,10 +95,10 @@ public class LoginController {
             student.setPassword(userpwd);
             Student s = loginService.selectStudent(student);
             if (s != null) {
-                map.put("id", s.getId());
-                map.put("username", s.getNumber());
-                map.put("user", s.getName());
-                map.put("type", "学生");
+                session.setAttribute("id", s.getId());
+                session.setAttribute("username", s.getNumber());
+                session.setAttribute("user", s.getName());
+                session.setAttribute("type", "学生");
             } else {
                 warn = "用户名或密码错误";
                 map.put("warn", warn);
