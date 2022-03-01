@@ -57,11 +57,6 @@
                         "type": type
                     },
                     success: function (data) {
-                        /* alert(data); */
-                        /* var obj = $.parseJSON(json);  //使用这个方法解析json
-                        alert(obj);
-                        var state_value = obj.result;  //result是和action中定义的result变量的get方
-                        alert(state_value); */
                         debugger;
                         if (data.warn) {
                             document.getElementById("warn").innerHTML = data.warn;

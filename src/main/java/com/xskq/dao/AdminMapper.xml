@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.xskq.model.Admin" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="userName" property="username" jdbcType="VARCHAR" />
-    <result column="userPw" property="userpw" jdbcType="VARCHAR" />
+    <result column="userPw" property="userPw" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, userName, userPw
@@ -56,8 +56,8 @@
       <if test="username != null" >
         userName = #{username,jdbcType=VARCHAR},
       </if>
-      <if test="userpw != null" >
-        userPw = #{userpw,jdbcType=VARCHAR},
+      <if test="userPw != null" >
+        userPw = #{userPw,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -65,13 +65,13 @@
   <update id="updateByPrimaryKey" parameterType="com.xskq.model.Admin" >
     update admin
     set userName = #{username,jdbcType=VARCHAR},
-      userPw = #{userpw,jdbcType=VARCHAR}
+      userPw = #{userPw,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectAdmin" resultMap="BaseResultMap" parameterType="com.xskq.model.Admin" >
     select * from admin
     where userName = #{username,jdbcType=VARCHAR}
-    and userPw = #{userpw,jdbcType=VARCHAR}
+    and userPw = #{userPw,jdbcType=VARCHAR}
   </select>
   <select id="getAdmin" resultMap="BaseResultMap" parameterType="com.xskq.model.Admin">
     select * from admin

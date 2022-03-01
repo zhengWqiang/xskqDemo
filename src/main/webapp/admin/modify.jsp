@@ -8,8 +8,8 @@
 </head>
 <body leftMargin=0 topMargin=0 marginwidth="0" marginheight="0">
 <br/>
-<form id="form1" name="form1" method="post" action="">
-    <input name="admin.id" type="hidden" id="id" value="${id }"/>
+<form id="form" method="post">
+    <input name="adminId" type="hidden" id="adminId" value="${id }"/>
     <table cellpadding="3" cellspacing="1" border="1" class="tableBorder1" align="center">
         <tr>
             <th class="tableHeaderText" colspan="2" height="25">
@@ -62,19 +62,45 @@
 </html>
 <script>
     function save() {
-        if ($("#userPw1").val() == "" || $("#userPw2").val() == "" || $("#userPw3").val() == "") {
+        debugger;
+        if ($("#userPw1").val() === "" || $("#userPw2").val() === "" || $("#userPw3").val() === "") {
             $.messager.alert('警告', '密码不能为空！', 'warning');
             return;
         }
-        if ($("#userPw2").val() == $("#userPw1").val()) {
+        if ($("#userPw2").val() === $("#userPw1").val()) {
             $.messager.alert('警告', '新密码不能和原密码一样！', 'warning');
             return;
         }
-        if ($("#userPw3").val() != $("#userPw2").val()) {
+        if ($("#userPw3").val() !== $("#userPw2").val()) {
             $.messager.alert('警告', '两次密码输入不一致！', 'warning');
             return;
         }
-        document.forms[0].action = "${pageContext.request.contextPath }/admin/modify";
-        document.forms[0].submit();
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "${pageContext.request.contextPath }/admin/doModify",
+            data: {
+                adminId: $("#adminId").val(),
+                "userPw1": $("#userPw1").val(),
+                "userPw3": $("#userPw3").val()
+            },
+            success: function (data) {
+                debugger;
+                if (data.error) {
+                    alert(data.error);
+                    history.go(-1);
+                } else {
+                    window.location.href = "${pageContext.request.contextPath}/index/right.jsp";
+                }
+            },
+            error: function (e) {
+                console.log("Error:" + e);
+                alert("Error!" + e);
+            }
+        });
+        //document.forms[0].action = "${pageContext.request.contextPath }/admin/doModify";
+        //document.forms[0].submit();
+        $("#form").attr("action", "${pageContext.request.contextPath }/admin/doModify");
+        $("#form").submit();
     }
 </script>

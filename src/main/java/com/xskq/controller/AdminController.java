@@ -7,6 +7,7 @@ import com.xskq.service.AdminService;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -17,7 +18,9 @@ import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Title: <br>
@@ -73,13 +76,16 @@ public class AdminController {
 
     @RequestMapping(value = "/doModify")
     @ResponseBody
-    public void doModify(Admin admin) throws Exception {
-        Admin a = service.selAdminById(admin.getId());
-        if (a.getUserPw().equals(admin.getUserPw())) {
-            a.setUserPw(admin.getUserPw());
+    public Object doModify(Integer adminId, String userPw1, String userPw3) {
+        Map<String, Object> map = new HashMap<>();
+        Admin a = service.selAdminById(adminId);
+        if (a.getUserPw().equals(userPw1)) {
+            a.setUserPw(userPw3);
             int result = service.updateAdmin(a);
+            return map;
         } else {
-            throw new Exception("原密码错误");
+            map.put("error", "原密码错误");
+            return map;
         }
     }
 
