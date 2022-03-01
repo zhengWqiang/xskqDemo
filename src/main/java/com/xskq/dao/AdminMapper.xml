@@ -73,7 +73,10 @@
     where userName = #{username,jdbcType=VARCHAR}
     and userPw = #{userpw,jdbcType=VARCHAR}
   </select>
-  <select id="getAdmin" resultMap="BaseResultMap" >
+  <select id="getAdmin" resultMap="BaseResultMap" parameterType="com.xskq.model.Admin">
     select * from admin
+  </select>
+  <select id="selCount" resultMap="BaseResultMap" parameterType="com.xskq.model.Admin">
+    select count(*) from admin
   </select>
 </mapper>

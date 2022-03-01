@@ -20,5 +20,7 @@ public interface AdminMapper {
 
     Admin selectAdmin(Admin admin);
 
-    List<Admin> getAdmin();
+    List<Admin> getAdmin(Admin admin);
+
+    int selCount(Admin admin);
 }

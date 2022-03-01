@@ -28,7 +28,7 @@ public class test {
     @Test
     public void test() {
         System.out.println("进来了");
-        List<Admin> admins = adminMapper.getAdmin();
+        List<Admin> admins = adminMapper.getAdmin(null);
         for (Admin admin : admins) {
             System.out.println(admin.getUsername());
         }

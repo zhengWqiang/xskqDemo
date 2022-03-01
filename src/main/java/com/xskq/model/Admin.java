@@ -5,7 +5,7 @@ public class Admin {
 
     private String username;
 
-    private String userpw;
+    private String userPw;
 
     public Integer getId() {
         return id;
@@ -23,11 +23,11 @@ public class Admin {
         this.username = username;
     }
 
-    public String getUserpw() {
-        return userpw;
+    public String getUserPw() {
+        return userPw;
     }
 
-    public void setUserpw(String userpw) {
-        this.userpw = userpw;
+    public void setUserPw(String userPw) {
+        this.userPw = userPw;
     }
 }

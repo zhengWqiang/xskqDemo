@@ -40,10 +40,6 @@ public class LoginController {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         HttpSession session = request.getSession();
         ModelAndView mv = new ModelAndView("index/index");
-        mv.addObject("id", session.getAttribute("id"));
-        mv.addObject("username", session.getAttribute("username"));
-        mv.addObject("user", session.getAttribute("user"));
-        mv.addObject("type", session.getAttribute("type"));
         return mv;
     }
 
@@ -63,7 +59,7 @@ public class LoginController {
         if (type == 1) {
             Admin admin = new Admin();
             admin.setUsername(username);
-            admin.setUserpw(userpwd);
+            admin.setUserPw(userpwd);
             Admin a = loginService.selectAdmin(admin);
             if (a != null) {
                 session.setAttribute("id", a.getId());
