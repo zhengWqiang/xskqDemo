@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class LoginFilter implements Filter {
 
-    public void destroy() {
+    public void init(FilterConfig filterConfig) throws ServletException {
 
     }
 
@@ -17,6 +17,7 @@ public class LoginFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession();
+        String url = req.getRequestURI();
         if (session.getAttribute("user") == null) {
             res.sendRedirect(req.getContextPath() + "/login.jsp");
         } else {
@@ -24,7 +25,7 @@ public class LoginFilter implements Filter {
         }
     }
 
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void destroy() {
 
     }
 }
