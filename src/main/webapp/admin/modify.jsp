@@ -52,7 +52,8 @@
             <td height="50" colspan="2" class='forumRow'>
                 <div align="center">
                     <input type="button" name="Submit" value="修改" class="button" onclick="save();"/>
-                    <input type="button" name="Submit2" value="返回" class="button" onclick="window.history.go(-1);"/>
+                    <input type="button" name="Submit2" value="返回" class="button" onclick="window.location.href =
+                            '${pageContext.request.contextPath}/index/right.jsp'"/>
                 </div>
             </td>
         </tr>
@@ -60,12 +61,12 @@
 </form>
 </body>
 </html>
-<script>
+<script type="text/javascript">
     function save() {
         debugger;
         if ($("#userPw1").val() === "" || $("#userPw2").val() === "" || $("#userPw3").val() === "") {
             $.messager.alert('警告', '密码不能为空！', 'warning');
-            return;
+            return false;
         }
         if ($("#userPw2").val() === $("#userPw1").val()) {
             $.messager.alert('警告', '新密码不能和原密码一样！', 'warning');
@@ -81,14 +82,13 @@
             url: "${pageContext.request.contextPath }/admin/doModify",
             data: {
                 adminId: $("#adminId").val(),
-                "userPw1": $("#userPw1").val(),
-                "userPw3": $("#userPw3").val()
+                userPw1: $("#userPw1").val(),
+                userPw3: $("#userPw3").val()
             },
             success: function (data) {
                 debugger;
                 if (data.error) {
                     alert(data.error);
-                    history.go(-1);
                 } else {
                     window.location.href = "${pageContext.request.contextPath}/index/right.jsp";
                 }
@@ -98,9 +98,5 @@
                 alert("Error!" + e);
             }
         });
-        //document.forms[0].action = "${pageContext.request.contextPath }/admin/doModify";
-        //document.forms[0].submit();
-        $("#form").attr("action", "${pageContext.request.contextPath }/admin/doModify");
-        $("#form").submit();
     }
 </script>

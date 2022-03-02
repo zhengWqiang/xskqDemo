@@ -81,12 +81,11 @@ public class AdminController {
         Admin a = service.selAdminById(adminId);
         if (a.getUserPw().equals(userPw1)) {
             a.setUserPw(userPw3);
-            int result = service.updateAdmin(a);
-            return map;
+            service.updateAdmin(a);
         } else {
             map.put("error", "原密码错误");
-            return map;
         }
+        return map;
     }
 
     @RequestMapping(value = "/doList")

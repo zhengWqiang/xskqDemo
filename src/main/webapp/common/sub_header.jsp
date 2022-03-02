@@ -9,10 +9,8 @@
 <head>
     <title>考勤管理系统</title>
 
-    <%--<LINK href="<%=path%>/js/jquery/plugin/jquery-easyui/themes/default/easyui.css" type="text/css" rel="stylesheet"></LINK>
-    <LINK href="<%=path%>/js/jquery/plugin/jquery-easyui/themes/icon.css" type="text/css" rel="stylesheet"></LINK>--%>
-    <script type="text/css" src="<%=path%>/js/jquery/plugin/jquery-easyui/themes/default/easyui.css"></script>
-    <script type="text/css" src="<%=path%>/js/jquery/plugin/jquery-easyui/themes/icon.css"></script>
+    <LINK href="<%=path%>/js/jquery/plugin/jquery-easyui/themes/default/easyui.css" type="text/css" rel="stylesheet"></LINK>
+    <LINK href="<%=path%>/js/jquery/plugin/jquery-easyui/themes/icon.css" type="text/css" rel="stylesheet"></LINK>
     <script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.4.2.min.js"></script>
     <script type="text/javascript" src="<%=path%>/js/jquery/plugin/jquery-easyui/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="<%=path%>/js/jquery/plugin/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
