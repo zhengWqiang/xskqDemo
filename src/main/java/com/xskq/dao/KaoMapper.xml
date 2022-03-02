@@ -11,11 +11,14 @@
     <result column="qin" property="qin" jdbcType="VARCHAR" />
     <result column="sid" property="sid" jdbcType="VARCHAR" />
   </resultMap>
+    <resultMap id="ExtMap" type="com.xskq.model.KaoExt" extends="BaseResultMap">
+        <result column="courseName" property="courseName" jdbcType="VARCHAR" />
+    </resultMap>
   <sql id="Base_Column_List" >
     kaoid, stunumber, stuname, courseid, adate, banji, qin, sid
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from kao
     where kaoid = #{kaoid,jdbcType=INTEGER}
@@ -125,4 +128,94 @@
       sid = #{sid,jdbcType=VARCHAR}
     where kaoid = #{kaoid,jdbcType=INTEGER}
   </update>
+  <select id="getKao" resultMap="ExtMap" parameterType="com.xskq.model.KaoExt">
+    select
+    k.kaoid, k.stunumber, k.stuname, k.courseid, k.adate, k.banji, k.qin, k.sid,
+    c.coursename courseName
+    from kao k,
+    course c
+    where k.courseid= c.courseid
+    <if test="stunumber != null" >
+      and k.stunumber like "%"#{stunumber,jdbcType=VARCHAR}"%"
+    </if>
+    <if test="stuname != null" >
+      and k.stuname = "%"#{stuname,jdbcType=VARCHAR}"%"
+    </if>
+    <if test="courseName != null" >
+      and c.coursename = "%"#{courseName,jdbcType=INTEGER}"%"
+    </if>
+    <if test="adate != null" >
+      and k.adate = #{adate,jdbcType=VARCHAR}
+    </if>
+    <if test="banji != null" >
+      and k.banji = "%"#{banji,jdbcType=VARCHAR}"%"
+    </if>
+    order by k.adate desc
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" parameterType="com.xskq.model.KaoExt">
+    select
+    count(*)
+    from kao k,
+    course c
+    where k.courseid= c.courseid
+    <if test="stunumber != null" >
+      and k.stunumber like "%"#{stunumber,jdbcType=VARCHAR}"%"
+    </if>
+    <if test="stuname != null" >
+      and k.stuname = "%"#{stuname,jdbcType=VARCHAR}"%"
+    </if>
+    <if test="courseName != null" >
+      and c.coursename = "%"#{courseName,jdbcType=INTEGER}"%"
+    </if>
+    <if test="adate != null" >
+      and k.adate = #{adate,jdbcType=VARCHAR}
+    </if>
+    <if test="banji != null" >
+      and k.banji = "%"#{banji,jdbcType=VARCHAR}"%"
+    </if>
+  </select>
+  <select id="getKaoByUser" resultMap="BaseResultMap" parameterType="com.xskq.model.Kao">
+    select a.stunumber, a.stuname, a.banji, a.sid
+    from (select count(k.stunumber) as sid, k.stunumber, k.stuname, k.banji from Kao k group by k.stunumber) as a
+    <where>
+        <if test="stunumber != null" >
+            a.stunumber like "%"#{stunumber,jdbcType=VARCHAR}"%"
+        </if>
+        <if test="stuname != null" >
+            and a.stuname = "%"#{stuname,jdbcType=VARCHAR}"%"
+        </if>
+        <if test="banji != null" >
+            and a.banji = "%"#{banji,jdbcType=VARCHAR}"%"
+        </if>
+    </where>
+  </select>
+    <select id="selCountByNumber" resultType="java.lang.Integer" parameterType="com.xskq.model.KaoExt">
+        select
+        count(distinct stunumber)
+        from kao
+        <where>
+            <if test="stunumber != null" >
+                and stunumber like "%"#{stunumber,jdbcType=VARCHAR}"%"
+            </if>
+            <if test="stuname != null" >
+                and stuname = "%"#{stuname,jdbcType=VARCHAR}"%"
+            </if>
+            <if test="banji != null" >
+                and banji = "%"#{banji,jdbcType=VARCHAR}"%"
+            </if>
+        </where>
+    </select>
+    <select id="getNumberByName" resultType="java.util.HashMap" >
+        select count(k.coursename) as number, k.coursename
+        from (select kao.*, course.coursename
+            from kao kao inner join course course on course.courseid = kao.courseid
+            where kao.stuname = #{name}) as k
+        group by k.coursename;
+    </select>
+    <select id="getNumberByBanji" resultType="java.util.HashMap" >
+        select count(banji) as number,
+        banji
+        from kao
+        group by banji
+    </select>
 </mapper>

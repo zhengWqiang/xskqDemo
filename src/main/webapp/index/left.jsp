@@ -178,7 +178,7 @@
             </div>
             <ul class="menuson">
                 <li>
-                    <cite></cite><a href="${pageContext.request.contextPath }/kao/clist"
+                    <cite></cite><a href="${pageContext.request.contextPath }/kao/clist.jsp"
                                     target="rightFrame">考勤统计查询</a><i></i>
                 </li>
             </ul>
