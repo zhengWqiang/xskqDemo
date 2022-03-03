@@ -4,14 +4,15 @@ import com.github.pagehelper.PageInfo;
 import com.xskq.model.Admin;
 import com.xskq.model.Aop;
 import com.xskq.service.AdminService;
+import com.xskq.service.AopService;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -37,7 +38,12 @@ public class AdminController {
     @Autowired
     private AdminService service;
     @Autowired
-    //private AopService aopservice;
+    private AopService aopservice;
+
+    @RequestMapping(value = "/goAop")
+    public ModelAndView goIndex() {
+        return new ModelAndView("admin/aop");
+    }
 
     public String getDownloadFileName() {
         SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd ");
@@ -62,10 +68,13 @@ public class AdminController {
         int result = service.delAdmin(admin.getId());
     }
 
-    @RequestMapping(value = "/toEdit")
+    @RequestMapping(value = "/getAdminById")
     @ResponseBody
-    public void toEdit(Admin admin) {
+    public void getAdminById(Admin admin) {
         Admin a = service.selAdminById(admin.getId());
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        HttpSession session = request.getSession();
+        session.setAttribute("admin", a);
     }
 
     @RequestMapping(value = "/doEdit")
@@ -88,13 +97,12 @@ public class AdminController {
         return map;
     }
 
-    @RequestMapping(value = "/doList")
+    @RequestMapping(value = "/getList")
     @ResponseBody
-    public void doList(Admin admin) {
+    public void getList(Admin admin) {
         int pageSize = 10;
         int pageNum = 1;
         int pagecount = service.selCount(admin, pageSize);
-        System.out.println("pageindex:" + pageNum);
         PageInfo<Admin> adminlist = service.getAdminPageInfo(admin, pageNum, pageSize);
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         HttpSession session = request.getSession();
@@ -104,32 +112,32 @@ public class AdminController {
         session.setAttribute("admin", admin);
     }
 
-    @RequestMapping(value = "/doAopList")
+    @RequestMapping(value = "/getAopList")
     @ResponseBody
-    public void doAopList(Aop aop, String begintime, String endtime) {
-        /*int pagesize = 10;
+    public void getAopList(Aop aop, Date beginTime, Date endTime) {
+        int pagesize = 10;
         int page = 1;
-        int pagecount = aopservice.selCount(aop, pagesize, begintime, endtime);
-        List<Aop> aoplist = aopservice.selAop(aop, page, pagesize, begintime, endtime);
+        int pagecount = aopservice.getAopCount(aop.getName(), pagesize, beginTime, endTime);
+        List<Aop> aoplist = aopservice.getAop(aop.getName(), page, pagesize, beginTime, endTime);
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         HttpSession session = request.getSession();
         session.setAttribute("aoplist", aoplist);
         session.setAttribute("pageindex", page);
         session.setAttribute("pagecount", pagecount);
         session.setAttribute("aop", aop);
-        session.setAttribute("begintime", begintime);
-        session.setAttribute("endtime", endtime);*/
+        session.setAttribute("beginTime", beginTime);
+        session.setAttribute("endTime", endTime);
     }
 
     @RequestMapping(value = "/getExcel")
     @ResponseBody
-    public void getExcel(Aop aop, String begintime, String endtime) throws Exception {
-        /*HSSFWorkbook workbook = aopservice.getExcel(aop, begintime, endtime);
+    public void getExcel(String name, Date begintime, Date endtime) throws Exception {
+        HSSFWorkbook workbook = aopservice.getExcel(name, begintime, endtime);
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         workbook.write(output);
         byte[] ba = output.toByteArray();
         InputStream excelFile = new ByteArrayInputStream(ba);
         output.flush();
-        output.close();*/
+        output.close();
     }
 }

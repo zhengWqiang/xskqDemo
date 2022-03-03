@@ -1,6 +1,5 @@
 package com.xskq.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.xskq.model.Admin;
 import com.xskq.model.Student;
 import com.xskq.model.Teacher;
@@ -37,8 +36,6 @@ public class LoginController {
 
     @RequestMapping(value = "/goIndex")
     public ModelAndView goIndex() {
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        HttpSession session = request.getSession();
         ModelAndView mv = new ModelAndView("index/index");
         return mv;
     }
@@ -66,6 +63,7 @@ public class LoginController {
                 session.setAttribute("username", a.getUsername());
                 session.setAttribute("user", a.getUsername());
                 session.setAttribute("type", "管理员");
+                session.setAttribute("code", a.getId() + a.getUsername());
             } else {
                 warn = "用户名或密码错误";
                 map.put("warn", warn);
@@ -80,6 +78,7 @@ public class LoginController {
                 session.setAttribute("username", t.getNumber());
                 session.setAttribute("user", t.getName());
                 session.setAttribute("type", "老师");
+                session.setAttribute("code", t.getNumber() + t.getName());
                 return map;
             } else {
                 warn = "用户名或密码错误";
@@ -95,6 +94,7 @@ public class LoginController {
                 session.setAttribute("username", s.getNumber());
                 session.setAttribute("user", s.getName());
                 session.setAttribute("type", "学生");
+                session.setAttribute("code", s.getNumber() + s.getName());
             } else {
                 warn = "用户名或密码错误";
                 map.put("warn", warn);

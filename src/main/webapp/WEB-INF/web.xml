@@ -89,4 +89,7 @@
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
+  <listener>
+    <listener-class>com.xskq.listener.OnlineListener</listener-class>
+  </listener>
 </web-app>

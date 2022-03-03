@@ -1,124 +1,125 @@
-<%@include file="/common/sub_header.jsp"%>
+<%@include file="/common/sub_header.jsp" %>
 <%@ page language="java" import="java.util.*"
-	pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<link href="<%=path%>/css/list.css" rel="stylesheet" type="text/css" />
-<style type="text/css">
-	a{
-		text-decoration:none;
-	}
-</style>
-<script type="text/javascript">
-	function checkdel(){
-		return confirm("是否删除?");
-	}
-</script>
-	</HEAD>
-	<BODY leftMargin="0" topMargin="0" marginwidth="0" marginheight="0">
-		<br/>
-		<table cellpadding="3" cellspacing="1" border="0" class="tableBorder"
-			align="center">
-			<tr>
-				<th width="100%" height="25" class="tableHeaderText">
-					日志列表
-				</th>
-				<tr>
-					<td height="450" valign="top" class="forumRow">
-						<b>当前在线人数:${applicationScope.number }</b>
-						<%-- <b>在线人员${applicationScope.alluser }</b><br> --%>
-						<hr/> 
-							<table width="95%" border="0" align="center" cellpadding="0"
-								cellspacing="0">
-<div>
-    <ul class="toolbar">
-        <li><a href="${pageContext.request.contextPath }/admin/excel?name=${requestScope.aop.name }&begintime=${requestScope.begintime }&endtime=${requestScope.endtime }">
-  			<span><img src="${pageContext.request.contextPath }/ncss/images/f05.png" /></span>导出</a></li>
-  		<%-- <li><b>当前在线人数:${applicationScope.number }</b></li> --%>
-    </ul>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="<%=path%>/css/list.css" rel="stylesheet" type="text/css"/>
+    <style type="text/css">
+        a {
+            text-decoration: none;
+        }
+    </style>
+    <script type="text/javascript">
+        function checkdel() {
+            return confirm("是否删除?");
+        }
+    </script>
+</HEAD>
+<BODY leftMargin="0" topMargin="0" marginwidth="0" marginheight="0">
+<br/>
+<table cellpadding="3" cellspacing="1" border="0" class="tableBorder"
+       align="center">
+    <tr>
+        <th width="100%" height="25" class="tableHeaderText">
+            日志列表
+        </th>
+    <tr>
+        <td height="450" valign="top" class="forumRow">
+            <b>当前在线人数:${applicationScope.number }</b>
+            <%-- <b>在线人员${applicationScope.alluser }</b><br> --%>
+            <hr/>
+            <table width="95%" border="0" align="center" cellpadding="0"
+                   cellspacing="0">
+                <div>
+                    <ul class="toolbar">
+                        <li>
+                            <a href="${pageContext.request.contextPath }/admin/excel?name=${requestScope.aop.name }&begintime=${requestScope.begintime }&endtime=${requestScope.endtime }">
+                                <span><img src="${pageContext.request.contextPath }/ncss/images/f05.png"/></span>导出</a>
+                        </li>
+                        <%-- <li><b>当前在线人数:${applicationScope.number }</b></li> --%>
+                    </ul>
+                </div>
+                <tr>
+                    <td height="30">
+                        <form action="aoplist" method="post">
+                            <div align="center">
+                                <label>
+                                    姓名：
+                                    <input type="text" name="aop.name" value="${requestScope.aop.name }"
+                                           style="width: 150px"/>
+                                </label>
+                                <label>
+                                    起始时间：
+                                    <input type="text" name="begintime" value="${requestScope.begintime }"
+                                           style="width: 150px"
+                                           onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readOnly:true})"/>
+                                </label>
+                                <label>
+                                    结束时间：
+                                    <input type="text" name="endtime" value="${requestScope.endtime }"
+                                           style="width: 150px"
+                                           onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readOnly:true})"/>
+                                </label>
+                                <label>
+                                    <input type="submit" type="button" value="查 询"/>
+                                </label>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+            <table width="95%" border="0" align="center" cellpadding="0"
+                   cellspacing="2">
+                <tr>
+                    <td width="10%" height="30" class="TitleHighlight">
+                        <div align="center" style="font-weight: bold; color: #ffffff">
+                            操作者
+                        </div>
+                    </td>
+                    <td width="10%" height="30" class="TitleHighlight">
+                        <div align="center" style="font-weight: bold; color: #ffffff">
+                            时间
+                        </div>
+                    </td>
+                    <td width="10%" height="30" class="TitleHighlight">
+                        <div align="center" style="font-weight: bold; color: #ffffff">
+                            事件
+                        </div>
+                    </td>
+                </tr>
+                <c:forEach items="${requestScope.aoplist }" var="aop">
+                    <tr align="center">
+                        <td height="30">${aop.name }</td>
+                        <td>${aop.date }</td>
+                        <td>${aop.event }</td>
+                    </tr>
+                </c:forEach>
+            </table>
+        </td>
+    </tr>
+    </tr>
+</table>
+<div align="center">
+    <c:if test="${requestScope.pageindex>1 }">
+        <a href="aoplist?page=1&name=${requestScope.aop.name }&begintime=${requestScope.begintime }&endtime=${requestScope.endtime }">首页</a>
+        <a href="aoplist?page=${requestScope.pageindex-1 }&name=${requestScope.aop.name }&begintime=${requestScope.begintime }&endtime=${requestScope.endtime }">上一页</a>
+    </c:if>
+    <c:if test="${requestScope.pageindex<=1 }">
+        首页 上一页
+    </c:if>
+    <c:choose>
+        <c:when test="${requestScope.pageindex<requestScope.pagecount }">
+            <a href="aoplist?page=${requestScope.pageindex+1 }&name=${requestScope.aop.name }&begintime=${requestScope.begintime }&endtime=${requestScope.endtime }">下一页</a>
+            <a href="aoplist?page=${requestScope.pagecount }&name=${requestScope.aop.name }&begintime=${requestScope.begintime }&endtime=${requestScope.endtime }">末页</a>
+        </c:when>
+        <c:otherwise>
+            下一页 尾页
+        </c:otherwise>
+    </c:choose>
 </div>
-								<tr>
-									<td height="30">
-										<form action="aoplist" method="post">
-											<div align="center">
-												<label>
-													姓名：
-													<input type="text" name="aop.name" value="${requestScope.aop.name }"
-														style="width: 150px" />
-												</label>
-												<label>
-													起始时间：
-													<input type="text" name="begintime" value="${requestScope.begintime }" 
-														style="width: 150px" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readOnly:true})"/>
-												</label>
-												<label>
-													结束时间：
-													<input type="text" name="endtime" value="${requestScope.endtime }" 
-														style="width: 150px" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readOnly:true})"/>
-												</label>
-												<label>
-													&nbsp;
-													<input type="submit" type="button" value="查 询" />
-												</label>
-											</div>
-										</form>
-									</td>
-								</tr>
-							</table>
-							
-							<table width="95%" border="0" align="center" cellpadding="0"
-								cellspacing="2">
-								<tr>
-									<td width="10%" height="30" class="TitleHighlight">
-										<div align="center" style="font-weight: bold; color: #ffffff">
-											操作者
-										</div>
-									</td>
-									<td width="10%" height="30" class="TitleHighlight">
-										<div align="center" style="font-weight: bold; color: #ffffff">
-											时间
-										</div>
-									</td>
-									<td width="10%" height="30" class="TitleHighlight">
-										<div align="center" style="font-weight: bold; color: #ffffff">
-											事件
-										</div>
-									</td>
-								</tr>
-								<c:forEach items="${requestScope.aoplist }" var="aop">
-        							<tr align="center">
-        								<td height="30">${aop.name }</td>
-        								<td>${aop.date }</td>
-        								<td>${aop.event }</td>
-        							</tr> 
-								</c:forEach>
-							</table>
-						</td>
-					</tr>
-				</tr>
-		</table>
-		<div align="center">
-  		<c:if test="${requestScope.pageindex>1 }">
-  			<a href="aoplist?page=1&name=${requestScope.aop.name }&begintime=${requestScope.begintime }&endtime=${requestScope.endtime }">首页</a>
-  			<a href="aoplist?page=${requestScope.pageindex-1 }&name=${requestScope.aop.name }&begintime=${requestScope.begintime }&endtime=${requestScope.endtime }">上一页</a>
-  		</c:if>
-  		<c:if test="${requestScope.pageindex<=1 }">
-  			首页  上一页
-  		</c:if>
-  		
-  		<c:choose>
-  			<c:when test="${requestScope.pageindex<requestScope.pagecount }">
-  				<a href="aoplist?page=${requestScope.pageindex+1 }&name=${requestScope.aop.name }&begintime=${requestScope.begintime }&endtime=${requestScope.endtime }">下一页</a>
-  				<a href="aoplist?page=${requestScope.pagecount }&name=${requestScope.aop.name }&begintime=${requestScope.begintime }&endtime=${requestScope.endtime }">末页</a>
-  			</c:when>
-  			<c:otherwise>
-  				下一页  尾页
-  			</c:otherwise>
-  		</c:choose>
-  	</div>
 </BODY>
 </html> 

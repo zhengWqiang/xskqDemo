@@ -212,7 +212,7 @@
             </div>
             <ul class="menuson">
                 <li>
-                    <cite></cite><a href="${pageContext.request.contextPath }/admin/aoplist"
+                    <cite></cite><a href="${pageContext.request.contextPath }/admin/goAop"
                                     target="rightFrame">日志查询</a><i></i>
                 </li>
             </ul>

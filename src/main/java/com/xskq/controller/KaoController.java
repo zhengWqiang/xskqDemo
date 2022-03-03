@@ -114,7 +114,7 @@ public class KaoController {
         session.setAttribute("kao", kao);
     }
 
-    @RequestMapping(value = "/doClist")
+    @RequestMapping(value = "/getShow")
     @ResponseBody
     public void getShow(KaoExt kao){
         //k.setCourse(c);

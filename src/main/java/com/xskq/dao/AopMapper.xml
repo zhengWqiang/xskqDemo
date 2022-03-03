@@ -11,7 +11,7 @@
     id, name, date, event
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from aop
     where id = #{id,jdbcType=INTEGER}
@@ -21,9 +21,9 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.xskq.model.Aop" >
-    insert into aop (id, name, date, 
+    insert into aop (id, name, date,
       event)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{date,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{date,jdbcType=VARCHAR},
       #{event,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.xskq.model.Aop" >
@@ -79,4 +79,36 @@
       event = #{event,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="getAop" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from aop
+    <where>
+      <if test="name != null and name != ''">
+        name like "%"#{name}"%"
+      </if>
+      <if test="beginTime != null and beginTime != ''">
+        and date >= #{beginTimeStr}
+      </if>
+      <if test="endTimeStr != null and endTimeStr != ''">
+        and date >= #{endTimeStr}
+      </if>
+    </where>
+  </select>
+  <select id="getAopCount" resultType="java.lang.Integer" >
+    select
+    count(*)
+    from aop
+    <where>
+      <if test="name != null and name != ''">
+        name like "%"#{name}"%"
+      </if>
+      <if test="beginTime != null and beginTime != ''">
+        and date >= #{beginTimeStr}
+      </if>
+      <if test="endTimeStr != null and endTimeStr != ''">
+        and date >= #{endTimeStr}
+      </if>
+    </where>
+  </select>
 </mapper>

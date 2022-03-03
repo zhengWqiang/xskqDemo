@@ -10,13 +10,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=gb2312"/>
     <link href="<%=path %>/ncss/css/style.css" rel="stylesheet" type="text/css"/>
     <script language="JavaScript" src="<%=path %>/ncss/js/jquery.js" type="text/javascript"></script>
-    <title>进销存管理系统</title>
+    <title>考勤管理系统</title>
     <script type="text/javascript">
         function logout() {
-            debugger;
             if (confirm("您确定要退出管理系统吗？")) {
-                console.log("退出系统确认");
-                top.location = "${pageContext.request.contextPath}/login.jsp";
+                top.location = "${pageContext.request.contextPath}/index/loginout.jsp";
             }
             return false;
         }
