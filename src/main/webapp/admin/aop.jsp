@@ -30,7 +30,6 @@
     <tr>
         <td height="450" valign="top" class="forumRow">
             <b>当前在线人数:${applicationScope.number }</b>
-            <%-- <b>在线人员${applicationScope.alluser }</b><br> --%>
             <hr/>
             <table width="95%" border="0" align="center" cellpadding="0"
                    cellspacing="0">
@@ -40,7 +39,6 @@
                             <a href="${pageContext.request.contextPath }/admin/excel?name=${requestScope.aop.name }&begintime=${requestScope.begintime }&endtime=${requestScope.endtime }">
                                 <span><img src="${pageContext.request.contextPath }/ncss/images/f05.png"/></span>导出</a>
                         </li>
-                        <%-- <li><b>当前在线人数:${applicationScope.number }</b></li> --%>
                     </ul>
                 </div>
                 <tr>

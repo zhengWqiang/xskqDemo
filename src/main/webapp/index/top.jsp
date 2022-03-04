@@ -29,7 +29,7 @@
         <li><a href="#" target="_self" onclick="logout();">退出</a></li>
     </ul>
     <div class="user">
-        <span>${user}(${type})</span>
+        <span>${sessionScope.user}(${sessionScope.type})</span>
     </div>
 </div>
 </body>
