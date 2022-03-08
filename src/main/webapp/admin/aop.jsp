@@ -14,8 +14,38 @@
         }
     </style>
     <script type="text/javascript">
-        function checkdel() {
-            return confirm("是否删除?");
+        $(function () {
+            debugger;
+            $("#beginTime").val(moment(new Date()).format("YYYY-MM-DD 00:00:00"));
+            $("#endTime").val(moment(new Date()).format("YYYY-MM-DD HH:mm:ss"));
+        });
+        function query() {
+            var name = $("#name").val();
+            var beginTime = $("#beginTime").val();
+            var endTime = $("#endTime").val();
+            $.ajax({
+                type: "post",
+                dataType: "json",
+                url: "${pageContext.request.contextPath }/admin/getAopList",
+                data: {
+                    "name": name,
+                    "beginTime": beginTime,
+                    "endTime": endTime
+                },
+                success: function (data) {
+                    debugger;
+                    if (data.warn) {
+                        document.getElementById("warn").innerHTML = data.warn;
+                        document.getElementById("userpwd").value = "";
+                    } else {
+                        window.location.href = "${pageContext.request.contextPath}/login/goIndex";
+                    }
+                },
+                error: function (e) {
+                    console.log("数据获取失败:" + e);
+                    alert("Error!" + e);
+                }
+            });
         }
     </script>
 </HEAD>
@@ -43,27 +73,27 @@
                 </div>
                 <tr>
                     <td height="30">
-                        <form action="aoplist" method="post">
+                        <form method="post">
                             <div align="center">
                                 <label>
                                     姓名：
-                                    <input type="text" name="aop.name" value="${requestScope.aop.name }"
+                                    <input type="text" id="name" name="aop.name" value="${requestScope.aop.name }"
                                            style="width: 150px"/>
                                 </label>
                                 <label>
                                     起始时间：
-                                    <input type="text" name="begintime" value="${requestScope.begintime }"
+                                    <input type="text" id="beginTime" name="beginTime" value="${requestScope.beginTime }"
                                            style="width: 150px"
-                                           onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readOnly:true})"/>
+                                           onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false,readOnly:true})"/>
                                 </label>
                                 <label>
                                     结束时间：
-                                    <input type="text" name="endtime" value="${requestScope.endtime }"
+                                    <input type="text" id="endTime" name="endTime" value="${requestScope.endTime }"
                                            style="width: 150px"
-                                           onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readOnly:true})"/>
+                                           onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false,readOnly:true})"/>
                                 </label>
                                 <label>
-                                    <input type="submit" type="button" value="查 询"/>
+                                    <input type="submit" value="查 询" onclick="query();return false;"/>
                                 </label>
                             </div>
                         </form>

@@ -16,6 +16,9 @@
     <script type="text/javascript" src="<%=path%>/js/jquery/plugin/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
     <script type="text/javascript" src="<%=path%>/js/jquery/plugin/jquery-easyui/plugins/jquery.window.js"></script>
     <script type="text/javascript" src="<%=path%>/js/calendar/WdatePicker.js"></script>
+    <script type="text/javascript" src="<%=path%>/js/dateFormat/date.format.js"></script>
+    <script type="text/javascript" src="<%=path%>/js/moment/2.24.0/moment.js"></script>
+    <script type="text/javascript" src="<%=path%>/js/moment/2.24.0/moment-with-locales.js"></script>
     <script type="text/javascript" src="<%=path %>/js/popup.js"></script>
     <script language="javascript">
         function up() {
