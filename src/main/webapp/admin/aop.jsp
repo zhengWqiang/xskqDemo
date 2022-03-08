@@ -77,20 +77,20 @@
                             <div align="center">
                                 <label>
                                     姓名：
-                                    <input type="text" id="name" name="aop.name" value="${requestScope.aop.name }"
+                                    <input type="text" id="name" value="${requestScope.aop.name }"
                                            style="width: 150px"/>
                                 </label>
                                 <label>
                                     起始时间：
-                                    <input type="text" id="beginTime" name="beginTime" value="${requestScope.beginTime }"
-                                           style="width: 150px"
-                                           onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false,readOnly:true})"/>
+                                    <input type="text" id="beginTime" value="${requestScope.beginTime }"
+                                           style="width: 150px" class="Wdate"
+                                           onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false,readOnly:true,maxDate:'#F{$dp.$D(\'endTime\')}'})"/>
                                 </label>
                                 <label>
                                     结束时间：
-                                    <input type="text" id="endTime" name="endTime" value="${requestScope.endTime }"
-                                           style="width: 150px"
-                                           onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false,readOnly:true})"/>
+                                    <input type="text" id="endTime" value="${requestScope.endTime }"
+                                           style="width: 150px" class="Wdate"
+                                           onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false,readOnly:true,minDate:'#F{$dp.$D(\'beginTime\')}',maxDate:'%y-%M-%d %H:%m:%s'})"/>
                                 </label>
                                 <label>
                                     <input type="submit" value="查 询" onclick="query();return false;"/>
