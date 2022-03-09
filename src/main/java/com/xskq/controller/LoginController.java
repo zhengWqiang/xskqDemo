@@ -102,4 +102,68 @@ public class LoginController {
         }
         return map;
     }
+
+    /**
+     * @param username
+     * @param userpwd
+     * @param type     1：管理员，2：老师，3：学生
+     * @return
+     */
+    @RequestMapping(value = "/doLogin1")
+    @ResponseBody
+    public ModelAndView doLogin1(String username, String userpwd, Short type) {
+        ModelAndView mv = new ModelAndView();
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        HttpSession session = request.getSession();
+        if (type == 1) {
+            Admin admin = new Admin();
+            admin.setUsername(username);
+            admin.setUserPw(userpwd);
+            Admin a = loginService.selectAdmin(admin);
+            if (a != null) {
+                session.setAttribute("id", a.getId());
+                session.setAttribute("username", a.getUsername());
+                session.setAttribute("user", a.getUsername());
+                session.setAttribute("type", "管理员");
+                session.setAttribute("code", a.getId() + a.getUsername());
+                mv.setViewName("index/index");
+            } else {
+                mv.addObject("warn", "用户名或密码错误");
+                mv.setViewName("/login1");
+            }
+        } else if (type == 2) {
+            Teacher teacher = new Teacher();
+            teacher.setNumber(username);
+            teacher.setPassword(userpwd);
+            Teacher t = loginService.selectTeacher(teacher);
+            if (t != null) {
+                session.setAttribute("id", t.getId());
+                session.setAttribute("username", t.getNumber());
+                session.setAttribute("user", t.getName());
+                session.setAttribute("type", "老师");
+                session.setAttribute("code", t.getNumber() + t.getName());
+                mv.setViewName("index/index");
+            } else {
+                mv.addObject("warn", "用户名或密码错误");
+                mv.setViewName("/login1");
+            }
+        } else {
+            Student student = new Student();
+            student.setNumber(username);
+            student.setPassword(userpwd);
+            Student s = loginService.selectStudent(student);
+            if (s != null) {
+                session.setAttribute("id", s.getId());
+                session.setAttribute("username", s.getNumber());
+                session.setAttribute("user", s.getName());
+                session.setAttribute("type", "学生");
+                session.setAttribute("code", s.getNumber() + s.getName());
+                mv.setViewName("index/index");
+            } else {
+                mv.addObject("warn", "用户名或密码错误");
+                mv.setViewName("/login1");
+            }
+        }
+        return mv;
+    }
 }
