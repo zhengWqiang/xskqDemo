@@ -16,8 +16,11 @@
     <script type="text/javascript">
         $(function () {
             debugger;
-            $("#beginTime").val(moment(new Date()).format("YYYY-MM-DD 00:00:00"));
-            $("#endTime").val(moment(new Date()).format("YYYY-MM-DD HH:mm:ss"));
+            var beginTime = $("#beginTime").val();
+            if (!beginTime) {
+                $("#beginTime").val(moment(new Date()).format("YYYY-MM-DD 00:00:00"));
+                $("#endTime").val(moment(new Date()).format("YYYY-MM-DD HH:mm:ss"));
+            }
         });
 
         function query() {
@@ -67,7 +70,7 @@
                 <div>
                     <ul class="toolbar">
                         <li>
-                            <a href="${pageContext.request.contextPath }/admin/excel?name=${name }&begintime=${begintime }&endtime=${endtime }">
+                            <a href="${pageContext.request.contextPath }/admin/excel?name=${name }&beginTime=${beginTime }&endTime=${endTime }">
                                 <span><img src="${pageContext.request.contextPath }/ncss/images/f05.png"/></span>导出</a>
                         </li>
                     </ul>
@@ -78,18 +81,18 @@
                             <div align="center">
                                 <label>
                                     姓名：
-                                    <input type="text" id="name" value="${name }"
-                                           style="width: 150px"/>
+                                    <input type="text" id="name" name="name" value="${name }"
+                                           style="width: 150px" placeholder="请输入姓名"/>
                                 </label>
                                 <label>
                                     起始时间：
-                                    <input type="text" id="beginTime" value="${beginTime }"
+                                    <input type="text" id="beginTime" name="beginTime" value="${beginTime }"
                                            style="width: 150px" class="Wdate"
                                            onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false,readOnly:true,maxDate:'#F{$dp.$D(\'endTime\')}'})"/>
                                 </label>
                                 <label>
                                     结束时间：
-                                    <input type="text" id="endTime" value="${endTime }"
+                                    <input type="text" id="endTime" name="endTime" value="${endTime }"
                                            style="width: 150px" class="Wdate"
                                            onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false,readOnly:true,minDate:'#F{$dp.$D(\'beginTime\')}',maxDate:'%y-%M-%d %H:%m:%s'})"/>
                                 </label>
@@ -134,7 +137,7 @@
     </tr>
 </table>
 <div align="center">
-    <c:if test="${aopPageInfo.pageNum>1 }">
+    <%--<c:if test="${aopPageInfo.pageNum>1 }">
         <a href="${pageContext.request.contextPath}/admin/getAopList?currentPage=1&name=${name }&beginTime=${beginTime }&endTime=${endTime }">
             首页
         </a>
@@ -147,7 +150,7 @@
     </c:if>
     <c:choose>
         <c:when test="${aopPageInfo.pageNum<aopPageInfo.pages }">
-            <a href="${pageContext.request.contextPath}/admin/getAopList?currentPage=${aopPageInfo.pageNum+1 }&name=${name }&beginTime=${beginTime }&endtime=${endTime }">
+            <a href="${pageContext.request.contextPath}/admin/getAopList?currentPage=${aopPageInfo.pageNum+1 }&name=${name }&beginTime=${beginTime }&endTime=${endTime }">
                 下一页
             </a>
             <a href="${pageContext.request.contextPath}/admin/getAopList?currentPage=${aopPageInfo.pages }&name=${name }&beginTime=${beginTime }&endTime=${endTime }">
@@ -157,7 +160,24 @@
         <c:otherwise>
             下一页 尾页
         </c:otherwise>
-    </c:choose>
+    </c:choose>--%>
+    <c:if test="${aopPageInfo.isFirstPage==true}"><a>首页</a> </c:if>
+    <c:if test="${aopPageInfo.isFirstPage==false}">
+        <a href="${pageContext.request.contextPath}/admin/getAopList?currentPage=${aopPageInfo.navigateFirstPage}&name=${name}&beginTime=${beginTime}&endTime=${endTime}">首页</a>
+    </c:if>
+    <c:if test="${aopPageInfo.hasPreviousPage==true}">
+        <a href="${pageContext.request.contextPath}/admin/getAopList?currentPage=${aopPageInfo.prePage}&name=${name}&beginTime=${beginTime}&endTime=${endTime}">上一页</a>
+    </c:if>
+    <c:if test="${aopPageInfo.hasPreviousPage==false}"><a>上一页</a> </c:if>
+    <c:if test="${aopPageInfo.hasNextPage==true}">
+        <a href="${pageContext.request.contextPath}/admin/getAopList?currentPage=${aopPageInfo.nextPage}&name=${name}&beginTime=${beginTime}&endTime=${endTime}">下一页</a>
+    </c:if>
+    <c:if test="${aopPageInfo.hasNextPage==false}"><a>下一页</a> </c:if>
+    <c:if test="${aopPageInfo.isLastPage==true}"><a>末页</a> </c:if>
+    <c:if test="${aopPageInfo.isLastPage==false}">
+        <a href="${pageContext.request.contextPath}/admin/getAopList?currentPage=${aopPageInfo.navigateLastPage}&name=${name}&beginTime=${beginTime}&endTime=${endTime}">末页</a>
+    </c:if>
+    <p>当前 ${aopPageInfo.pageNum }页,总${aopPageInfo.pages }页,总 ${aopPageInfo.total } 条记录</div></p>
 </div>
 </BODY>
 </html> 

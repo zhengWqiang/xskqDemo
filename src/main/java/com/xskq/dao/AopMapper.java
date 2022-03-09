@@ -18,9 +18,6 @@ public interface AopMapper {
 
     int updateByPrimaryKey(Aop record);
 
-    List<Aop> getAop(@Param("name") String name, @Param("beginTimeStr") String beginTimeStr,
-                     @Param("endTimeStr") String endTimeStr);
-
-    int getAopCount(@Param("name") String name, @Param("beginTimeStr") String beginTimeStr,
-                     @Param("endTimeStr") String endTimeStr);
+    List<Aop> getAop(@Param("name") String name, @Param("beginTime") String beginTime,
+                     @Param("endTime") String endTime);
 }

@@ -88,26 +88,10 @@
         name like "%"#{name}"%"
       </if>
       <if test="beginTime != null and beginTime != ''">
-        and date >= #{beginTimeStr}
+        and date >= #{beginTime}
       </if>
-      <if test="endTimeStr != null and endTimeStr != ''">
-        and date >= #{endTimeStr}
-      </if>
-    </where>
-  </select>
-  <select id="getAopCount" resultType="java.lang.Integer" >
-    select
-    count(*)
-    from aop
-    <where>
-      <if test="name != null and name != ''">
-        name like "%"#{name}"%"
-      </if>
-      <if test="beginTime != null and beginTime != ''">
-        and date >= #{beginTimeStr}
-      </if>
-      <if test="endTimeStr != null and endTimeStr != ''">
-        and date >= #{endTimeStr}
+      <if test="endTime != null and endTime != ''">
+        and date >= #{endTime}
       </if>
     </where>
   </select>

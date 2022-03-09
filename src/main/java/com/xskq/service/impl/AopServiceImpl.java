@@ -32,30 +32,8 @@ public class AopServiceImpl implements AopService {
     }
 
     @Override
-    public List<Aop> getAop(String name, int pageindex, int pagesize, Date beginTime, Date endTime) {
-        String beginTimeStr = null;
-        if (beginTime != null) {
-            beginTimeStr = DateUtils.dateToStrTime(beginTime);
-        }
-        String endTimeStr = null;
-        if (beginTime != null) {
-            endTimeStr = DateUtils.dateToStrTime(endTime);
-        }
-        return aopMapper.getAop(name, beginTimeStr, endTimeStr);
-    }
-
-    @Override
-    public int getAopCount(String name, int pagesize, Date beginTime, Date endTime) {
-        String beginTimeStr = null;
-        if (beginTime != null) {
-            beginTimeStr = DateUtils.dateToStrTime(beginTime);
-        }
-        String endTimeStr = null;
-        if (beginTime != null) {
-            endTimeStr = DateUtils.dateToStrTime(endTime);
-        }
-        int rscount = aopMapper.getAopCount(name, beginTimeStr, endTimeStr);
-        return (rscount + pagesize - 1) / pagesize;
+    public List<Aop> getAop(String name, int pageindex, int pagesize, String beginTime, String endTime) {
+        return aopMapper.getAop(name, beginTime, endTime);
     }
 
     @Override

@@ -15,7 +15,6 @@
     <script type="text/javascript" src="<%=path%>/js/jquery/plugin/jquery-easyui/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="<%=path%>/js/jquery/plugin/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
     <script type="text/javascript" src="<%=path%>/js/jquery/plugin/jquery-easyui/plugins/jquery.window.js"></script>
-    <%--<script type="text/javascript" src="<%=path%>/js/calendar/WdatePicker.js"></script>--%>
     <script type="text/javascript" src="<%=path%>/js/My97DatePicker/WdatePicker.js"></script>
     <script type="text/javascript" src="<%=path%>/js/moment/2.24.0/moment.js"></script>
     <script type="text/javascript" src="<%=path%>/js/moment/2.24.0/moment-with-locales.js"></script>

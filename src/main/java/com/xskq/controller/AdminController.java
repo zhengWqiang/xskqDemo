@@ -115,28 +115,24 @@ public class AdminController {
 
     @RequestMapping(value = "/getAopList")
     @ResponseBody
-    public ModelAndView getAopList(String name, Integer currentPage, Date beginTime, Date endTime) {
+    public ModelAndView getAopList(String name, Integer currentPage, String beginTime, String endTime, Map<String, Object> map) {
         int pageSize = 10;
         if (currentPage == null) {
             currentPage = 1;
         }
-        //int pagecount = aopservice.getAopCount(aop.getName(), pageSize, beginTime, endTime);
         PageHelper.startPage(currentPage, pageSize);
-        List<Aop> aopList = aopservice.getAop(name, currentPage, pageSize, beginTime, endTime);
+        List<Aop> aopList = aopservice.getAop(name, currentPage, pageSize, beginTime, beginTime);
         PageInfo<Aop> aopPageInfo = new PageInfo<>(aopList);
-        Map<String, Object> map = new HashMap<>();
+        /*mv.addObject("aopPageInfo", aopPageInfo);
+        mv.addObject("beginTime", beginTime);
+        mv.addObject("endTime", endTime);
+        mv.addObject("name", name);
+        mv.setViewName("admin/aop");
+        return mv*/
         map.put("aopPageInfo", aopPageInfo);
         map.put("beginTime", beginTime);
         map.put("endTime", endTime);
         map.put("name", name);
-        /*HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        HttpSession session = request.getSession();
-        session.setAttribute("aoplist", aoplist);
-        session.setAttribute("pageindex", page);
-        session.setAttribute("pagecount", pagecount);
-        session.setAttribute("aop", aop);
-        session.setAttribute("beginTime", beginTime);
-        session.setAttribute("endTime", endTime);*/
         return new ModelAndView("admin/aop");
     }
 
