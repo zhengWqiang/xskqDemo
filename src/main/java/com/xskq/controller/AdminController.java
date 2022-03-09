@@ -1,5 +1,6 @@
 package com.xskq.controller;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xskq.model.Admin;
 import com.xskq.model.Aop;
@@ -114,19 +115,29 @@ public class AdminController {
 
     @RequestMapping(value = "/getAopList")
     @ResponseBody
-    public void getAopList(Aop aop, Date beginTime, Date endTime) {
-        int pagesize = 10;
-        int page = 1;
-        int pagecount = aopservice.getAopCount(aop.getName(), pagesize, beginTime, endTime);
-        List<Aop> aoplist = aopservice.getAop(aop.getName(), page, pagesize, beginTime, endTime);
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+    public ModelAndView getAopList(String name, Integer currentPage, Date beginTime, Date endTime) {
+        int pageSize = 10;
+        if (currentPage == null) {
+            currentPage = 1;
+        }
+        //int pagecount = aopservice.getAopCount(aop.getName(), pageSize, beginTime, endTime);
+        PageHelper.startPage(currentPage, pageSize);
+        List<Aop> aopList = aopservice.getAop(name, currentPage, pageSize, beginTime, endTime);
+        PageInfo<Aop> aopPageInfo = new PageInfo<>(aopList);
+        Map<String, Object> map = new HashMap<>();
+        map.put("aopPageInfo", aopPageInfo);
+        map.put("beginTime", beginTime);
+        map.put("endTime", endTime);
+        map.put("name", name);
+        /*HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         HttpSession session = request.getSession();
         session.setAttribute("aoplist", aoplist);
         session.setAttribute("pageindex", page);
         session.setAttribute("pagecount", pagecount);
         session.setAttribute("aop", aop);
         session.setAttribute("beginTime", beginTime);
-        session.setAttribute("endTime", endTime);
+        session.setAttribute("endTime", endTime);*/
+        return new ModelAndView("admin/aop");
     }
 
     @RequestMapping(value = "/getExcel")

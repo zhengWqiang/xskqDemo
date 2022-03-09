@@ -19,6 +19,7 @@
             $("#beginTime").val(moment(new Date()).format("YYYY-MM-DD 00:00:00"));
             $("#endTime").val(moment(new Date()).format("YYYY-MM-DD HH:mm:ss"));
         });
+
         function query() {
             var name = $("#name").val();
             var beginTime = $("#beginTime").val();
@@ -66,34 +67,35 @@
                 <div>
                     <ul class="toolbar">
                         <li>
-                            <a href="${pageContext.request.contextPath }/admin/excel?name=${requestScope.aop.name }&begintime=${requestScope.begintime }&endtime=${requestScope.endtime }">
+                            <a href="${pageContext.request.contextPath }/admin/excel?name=${name }&begintime=${begintime }&endtime=${endtime }">
                                 <span><img src="${pageContext.request.contextPath }/ncss/images/f05.png"/></span>导出</a>
                         </li>
                     </ul>
                 </div>
                 <tr>
                     <td height="30">
-                        <form method="post">
+                        <form action="<%=path %>/admin/getAopList" method="post">
                             <div align="center">
                                 <label>
                                     姓名：
-                                    <input type="text" id="name" value="${requestScope.aop.name }"
+                                    <input type="text" id="name" value="${name }"
                                            style="width: 150px"/>
                                 </label>
                                 <label>
                                     起始时间：
-                                    <input type="text" id="beginTime" value="${requestScope.beginTime }"
+                                    <input type="text" id="beginTime" value="${beginTime }"
                                            style="width: 150px" class="Wdate"
                                            onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false,readOnly:true,maxDate:'#F{$dp.$D(\'endTime\')}'})"/>
                                 </label>
                                 <label>
                                     结束时间：
-                                    <input type="text" id="endTime" value="${requestScope.endTime }"
+                                    <input type="text" id="endTime" value="${endTime }"
                                            style="width: 150px" class="Wdate"
                                            onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false,readOnly:true,minDate:'#F{$dp.$D(\'beginTime\')}',maxDate:'%y-%M-%d %H:%m:%s'})"/>
                                 </label>
                                 <label>
-                                    <input type="submit" value="查 询" onclick="query();return false;"/>
+                                    <%--<input type="submit" value="查 询" onclick="query();return false;"/>--%>
+                                    <input type="submit" value="查 询"/>
                                 </label>
                             </div>
                         </form>
@@ -119,7 +121,7 @@
                         </div>
                     </td>
                 </tr>
-                <c:forEach items="${requestScope.aoplist }" var="aop">
+                <c:forEach items="${aopPageInfo.list }" var="aop">
                     <tr align="center">
                         <td height="30">${aop.name }</td>
                         <td>${aop.date }</td>
@@ -132,17 +134,25 @@
     </tr>
 </table>
 <div align="center">
-    <c:if test="${requestScope.pageindex>1 }">
-        <a href="aoplist?page=1&name=${requestScope.aop.name }&begintime=${requestScope.begintime }&endtime=${requestScope.endtime }">首页</a>
-        <a href="aoplist?page=${requestScope.pageindex-1 }&name=${requestScope.aop.name }&begintime=${requestScope.begintime }&endtime=${requestScope.endtime }">上一页</a>
+    <c:if test="${aopPageInfo.pageNum>1 }">
+        <a href="${pageContext.request.contextPath}/admin/getAopList?currentPage=1&name=${name }&beginTime=${beginTime }&endTime=${endTime }">
+            首页
+        </a>
+        <a href="${pageContext.request.contextPath}/admin/getAopList?currentPage=${aopPageInfo.pageNum-1 }&name=${name }&beginTime=${beginTime }&endTime=${endTime }">
+            上一页
+        </a>
     </c:if>
-    <c:if test="${requestScope.pageindex<=1 }">
+    <c:if test="${aopPageInfo.pageNum<=1 }">
         首页 上一页
     </c:if>
     <c:choose>
-        <c:when test="${requestScope.pageindex<requestScope.pagecount }">
-            <a href="aoplist?page=${requestScope.pageindex+1 }&name=${requestScope.aop.name }&begintime=${requestScope.begintime }&endtime=${requestScope.endtime }">下一页</a>
-            <a href="aoplist?page=${requestScope.pagecount }&name=${requestScope.aop.name }&begintime=${requestScope.begintime }&endtime=${requestScope.endtime }">末页</a>
+        <c:when test="${aopPageInfo.pageNum<aopPageInfo.pages }">
+            <a href="${pageContext.request.contextPath}/admin/getAopList?currentPage=${aopPageInfo.pageNum+1 }&name=${name }&beginTime=${beginTime }&endtime=${endTime }">
+                下一页
+            </a>
+            <a href="${pageContext.request.contextPath}/admin/getAopList?currentPage=${aopPageInfo.pages }&name=${name }&beginTime=${beginTime }&endTime=${endTime }">
+                末页
+            </a>
         </c:when>
         <c:otherwise>
             下一页 尾页
