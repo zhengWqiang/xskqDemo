@@ -31,7 +31,7 @@
             $.ajax({
                 type: "post",
                 dataType: "json",
-                url: "${pageContext.request.contextPath }/admin/getAopList",
+                url: "${pageContext.request.contextPath }/admin/getAopList1",
                 data: {
                     "name": name,
                     "beginTime": beginTime,
@@ -41,30 +41,16 @@
                     debugger;
                     $("#tbody").empty();
                     $.each(data.list, function (key, obj) {
-                        /* alert(obj.typeId.typeName); */
                         let tr = "<tr>";
-                        tr += "<td>" + obj.goodsId + "</td>";
-                        tr += "<td>" + obj.goodsName + "</td>";
-                        tr += "<td>" + obj.typeName + "</td>";
-                        tr += "<td>" + obj.goodsDesc + "</td>";
-                        tr += "<td>" + obj.goodsUnitPrice + "</td>";
-                        /* tr+="<td><img style=' width:80px; height:80px;' src='"+obj.goodsImageName+"'/></td>"; */
-                        tr += "<td>" + obj.sellCount + "</td>";
-                        tr += "<td>" + obj.goodsDate + "</td>";
-                        tr += "<td><input type='button'  id=" + obj.goodsId + " data-toggle='modal' data-target='#myModal' title=" + obj.goodsId + "  class='findById btn btn-default' value='修改'></td>";
-                        tr += "<td><input type='button' id=" + obj.goodsId + "  class='delete btn btn-default' value='删除'></td>";
+                        tr += "<td height='30'>" + obj.name + "</td>";
+                        tr += "<td>" + obj.date + "</td>";
+                        tr += "<td>" + obj.event + "</td>";
                         tr += "</tr>";
                         $("#tbody").append(tr);
-                        //重新初始化分页链接
-                        $("#curPage").html(data.pageNum);//当前页
-                        $("#totalPages").html(data.pages);//总页数
-                        $("#totals").html(data.total);//总条数
-                        $("#first").attr("data", 1);//首页
-                        $("#prev").attr("data", data.prePage);//上一页
-                        $("#next").attr("data", data.nextPage);//下一页
-                        $("#last").attr("data", data.pages);//尾页
-                        $("#txtCurPage").val(data.pageNum).attr("max", data.pages);
                     });
+                    $("#curPage").html(data.pageNum);//当前页
+                    $("#totalPages").html(data.pages);//总页数
+                    $("#totals").html(data.total);//总条数
                 },
                 error: function (e) {
                     console.log("数据获取失败:" + e);
@@ -162,6 +148,9 @@
 </table>
 <div align="center">
     <p>
+        当前 <span id="curPage"></span> 页,总 <span id="totalPages"></span> 页,总 <span id="totals"></span> 条记录
+    </p>
+    <%--<p>
         <c:choose>
             <c:when test="${aopPageInfo != null }">
                 当前 ${aopPageInfo.pageNum } 页,总 ${aopPageInfo.pages } 页,总 ${aopPageInfo.total } 条记录
@@ -170,7 +159,7 @@
                 当前 0 页,总 0 页,总 0 条记录
             </c:otherwise>
         </c:choose>
-    </p>
+    </p>--%>
     <%--<c:if test="${aopPageInfo.pageNum>1 }">
         <a href="${pageContext.request.contextPath}/admin/getAopList?currentPage=1&name=${name }&beginTime=${beginTime }&endTime=${endTime }">
             首页
@@ -192,10 +181,10 @@
             </a>
         </c:when>
         <c:otherwise>
-            下一页 尾页
+            下一页 末页
         </c:otherwise>
     </c:choose>--%>
-    <c:if test="${aopPageInfo.isFirstPage==true}"><a>首页</a> </c:if>
+    <%--<c:if test="${aopPageInfo.isFirstPage==true}"><a>首页</a> </c:if>
     <c:if test="${aopPageInfo.isFirstPage==false}">
         <a href="${pageContext.request.contextPath}/admin/getAopList?currentPage=${aopPageInfo.navigateFirstPage}&name=${name}&beginTime=${beginTime}&endTime=${endTime}">首页</a>
     </c:if>
@@ -210,7 +199,7 @@
     <c:if test="${aopPageInfo.isLastPage==true}"><a>末页</a> </c:if>
     <c:if test="${aopPageInfo.isLastPage==false}">
         <a href="${pageContext.request.contextPath}/admin/getAopList?currentPage=${aopPageInfo.navigateLastPage}&name=${name}&beginTime=${beginTime}&endTime=${endTime}">末页</a>
-    </c:if>
+    </c:if>--%>
 </div>
 </body>
 </html> 

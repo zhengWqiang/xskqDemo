@@ -136,6 +136,29 @@ public class AdminController {
         return new ModelAndView("admin/aop");
     }
 
+    @RequestMapping(value = "/getAopList1")
+    @ResponseBody
+    public Object getAopList1(String name, Integer currentPage, String beginTime, String endTime, Map<String, Object> map) {
+        int pageSize = 10;
+        if (currentPage == null) {
+            currentPage = 1;
+        }
+        PageHelper.startPage(currentPage, pageSize);
+        List<Aop> aopList = aopservice.getAop(name, currentPage, pageSize, beginTime, beginTime);
+        PageInfo<Aop> aopPageInfo = new PageInfo<>(aopList);
+        /*mv.addObject("aopPageInfo", aopPageInfo);
+        mv.addObject("beginTime", beginTime);
+        mv.addObject("endTime", endTime);
+        mv.addObject("name", name);
+        mv.setViewName("admin/aop");
+        return mv*/
+        map.put("aopPageInfo", aopPageInfo);
+        map.put("beginTime", beginTime);
+        map.put("endTime", endTime);
+        map.put("name", name);
+        return map;
+    }
+
     @RequestMapping(value = "/getExcel")
     @ResponseBody
     public void getExcel(String name, Date begintime, Date endtime) throws Exception {
