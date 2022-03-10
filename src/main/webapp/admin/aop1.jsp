@@ -21,7 +21,6 @@
                 $("#beginTime").val(moment(new Date()).format("YYYY-MM-DD 00:00:00"));
                 $("#endTime").val(moment(new Date()).format("YYYY-MM-DD HH:mm:ss"));
             }
-            query();
         });
 
         function query() {
@@ -39,37 +38,16 @@
                 },
                 success: function (data) {
                     debugger;
-                    $("#tbody").empty();
-                    $.each(data.list, function (key, obj) {
-                        /* alert(obj.typeId.typeName); */
-                        let tr = "<tr>";
-                        tr += "<td>" + obj.goodsId + "</td>";
-                        tr += "<td>" + obj.goodsName + "</td>";
-                        tr += "<td>" + obj.typeName + "</td>";
-                        tr += "<td>" + obj.goodsDesc + "</td>";
-                        tr += "<td>" + obj.goodsUnitPrice + "</td>";
-                        /* tr+="<td><img style=' width:80px; height:80px;' src='"+obj.goodsImageName+"'/></td>"; */
-                        tr += "<td>" + obj.sellCount + "</td>";
-                        tr += "<td>" + obj.goodsDate + "</td>";
-                        tr += "<td><input type='button'  id=" + obj.goodsId + " data-toggle='modal' data-target='#myModal' title=" + obj.goodsId + "  class='findById btn btn-default' value='修改'></td>";
-                        tr += "<td><input type='button' id=" + obj.goodsId + "  class='delete btn btn-default' value='删除'></td>";
-                        tr += "</tr>";
-                        $("#tbody").append(tr);
-                        //重新初始化分页链接
-                        $("#curPage").html(data.pageNum);//当前页
-                        $("#totalPages").html(data.pages);//总页数
-                        $("#totals").html(data.total);//总条数
-                        $("#first").attr("data", 1);//首页
-                        $("#prev").attr("data", data.prePage);//上一页
-                        $("#next").attr("data", data.nextPage);//下一页
-                        $("#last").attr("data", data.pages);//尾页
-                        $("#txtCurPage").val(data.pageNum).attr("max", data.pages);
-                    });
+                    if (data.warn) {
+                        document.getElementById("warn").innerHTML = data.warn;
+                        document.getElementById("userpwd").value = "";
+                    } else {
+                        window.location.href = "${pageContext.request.contextPath}/login/goIndex";
+                    }
                 },
                 error: function (e) {
                     console.log("数据获取失败:" + e);
-                    //alert("Error!" + e);
-                    $.messager.alert('错误', e, 'error');
+                    alert("Error!" + e);
                 }
             });
         }
@@ -146,16 +124,13 @@
                         </div>
                     </td>
                 </tr>
-                <tbody id="tbody">
-
-                </tbody>
-                <%--<c:forEach items="${aopPageInfo.list }" var="aop">
+                <c:forEach items="${aopPageInfo.list }" var="aop">
                     <tr align="center">
                         <td height="30">${aop.name }</td>
                         <td>${aop.date }</td>
                         <td>${aop.event }</td>
                     </tr>
-                </c:forEach>--%>
+                </c:forEach>
             </table>
         </td>
     </tr>
