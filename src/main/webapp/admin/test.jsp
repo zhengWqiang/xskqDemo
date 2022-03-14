@@ -172,8 +172,65 @@
 </html>
 <script>
     $(function () {
-        queryTbGoods();
-        queryTbGoodsType();
+        function pageAction(p, a) {
+
+            alert(p + '+' + a);
+            var str = "currentPage=" + p + "&cid=" + a;
+            $.ajax({
+                type: 'post',
+                url: '${pageContext.request.contextPath}/book/ajax.do?id=${page.id}',
+                data: str,
+                success: function (data) {
+                    //console.log(data);
+                    //页面数据处理
+                    var result = data.books;
+                    //console.log(result.length);
+                    var l = '';
+                    // 在外面定义一个0，是为了将循环得到的obj.cid赋值给他，相当于计数器，作为后面的拼接页码里的点击事件的方法里的参数使用
+                    var a = 0;
+                    for (var i = 0; i < result.length; i++) {
+                        var obj = result[i];
+                        a = obj.cid;
+                        l += '<div style="float: left;" id="icon">';
+                        l += '<a href="${pageContext.request.contextPath}/book/detail.do?bid=' + obj.bid + '">' + '<img src="../../../' + obj.image + '" border="0"/>' + '</a>';
+                        l += '<br/>';
+                        l += '<a href="${pageContext.request.contextPath}/book/detail.do?bid=' + obj.bid + '">' + obj.bname + '</a>';
+                        l += '</div>'
+                    }
+                    //jquery获取div标签对象，将它下面a链接的子标签删掉
+                    $("#icon>a").remove();
+                    // 再用拼接好的替换
+                    $("#icon").html(l);
+                    // 页码处理
+                    var page = data.page;
+                    // console.log(page.totalPage);
+                    console.log(a);
+                    var l1 = '';
+                    if (page.currentPage == 1) {
+                        l1 += '<a href="javascript:void(0);">&上一页</a>';
+                    } else {
+                        l1 += '<a href="javascript:void(0);" onclick="pageAction(' + (page.currentPage - 1) + ',' + a + ')">&上一页</a>';
+                    }
+                    l1 += ' ';
+                    for (var i = 1; i < page.totalPage + 1; i++) {
+                        if (i == page.currentPage) {
+                            l1 += '<a href="javascript:void(0);" onclick="pageAction(' + i + ',' + a + ')" style="color: red">&' + i + '</a>';
+                        } else {
+                            l1 += '<a href="javascript:void(0);" onclick="pageAction(' + i + ',' + a + ')">&' + i + '</a>';
+                        }
+                    }
+                    l1 += '  ';
+                    if (page.currentPage == page.totalPage) {
+                        l1 += '<a href="javascript:void(0);">下一页&</a>';
+                    } else {
+                        l1 += '<a href="javascript:void(0);" onclick="pageAction(' + (page.currentPage + 1) + ',' + a + ')">下一页&</a>';
+                    }
+                    // 同上
+                    $("#pageId>a").remove();
+                    $("#pageId").html(l1);
+                }
+            })
+        }
     });
 
     /* 查询商品表 */

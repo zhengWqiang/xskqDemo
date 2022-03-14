@@ -9,6 +9,7 @@ import com.xskq.service.AopService;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -113,9 +114,11 @@ public class AdminController {
         session.setAttribute("admin", admin);
     }
 
-    @RequestMapping(value = "/getAopList")
+    //todo 入参中的map会通过org.springframework.web.servlet.DispatcherServlet一层层匹配到ModelAndView中
+    @RequestMapping(value = "/getAopList1")
     @ResponseBody
-    public ModelAndView getAopList(String name, Integer currentPage, String beginTime, String endTime, Map<String, Object> map) {
+    public ModelAndView getAopList1(String name, Integer currentPage, String beginTime, String endTime,
+                                    Map<String, Object> map) {
         int pageSize = 10;
         if (currentPage == null) {
             currentPage = 1;
@@ -133,12 +136,12 @@ public class AdminController {
         map.put("beginTime", beginTime);
         map.put("endTime", endTime);
         map.put("name", name);
-        return new ModelAndView("admin/aop");
+        return new ModelAndView("admin/aop1");
     }
 
-    @RequestMapping(value = "/getAopList1")
+    @RequestMapping(value = "/getAopList")
     @ResponseBody
-    public Object getAopList1(String name, Integer currentPage, String beginTime, String endTime, Map<String, Object> map) {
+    public Object getAopList(String name, Integer currentPage, String beginTime, String endTime) {
         int pageSize = 10;
         if (currentPage == null) {
             currentPage = 1;
@@ -152,6 +155,7 @@ public class AdminController {
         mv.addObject("name", name);
         mv.setViewName("admin/aop");
         return mv*/
+        Map<String, Object> map = new HashMap<>();
         map.put("aopPageInfo", aopPageInfo);
         map.put("beginTime", beginTime);
         map.put("endTime", endTime);

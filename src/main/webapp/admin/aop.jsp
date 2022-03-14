@@ -24,23 +24,24 @@
             query();
         });
 
-        function query() {
+        function query(currentPage) {
             let name = $("#name").val();
             let beginTime = $("#beginTime").val();
             let endTime = $("#endTime").val();
             $.ajax({
                 type: "post",
                 dataType: "json",
-                url: "${pageContext.request.contextPath }/admin/getAopList1",
+                url: "${pageContext.request.contextPath }/admin/getAopList",
                 data: {
-                    "name": name,
-                    "beginTime": beginTime,
-                    "endTime": endTime
+                    name: name,
+                    beginTime: beginTime,
+                    endTime: endTime,
+                    currentPage: currentPage
                 },
                 success: function (data) {
                     debugger;
                     $("#tbody").empty();
-                    $.each(data.list, function (key, obj) {
+                    $.each(data.aopPageInfo.list, function (key, obj) {
                         let tr = "<tr>";
                         tr += "<td height='30'>" + obj.name + "</td>";
                         tr += "<td>" + obj.date + "</td>";
@@ -48,13 +49,38 @@
                         tr += "</tr>";
                         $("#tbody").append(tr);
                     });
-                    $("#curPage").html(data.pageNum);//当前页
-                    $("#totalPages").html(data.pages);//总页数
-                    $("#totals").html(data.total);//总条数
+                    $("#curPage").html(data.aopPageInfo.pageNum);//当前页
+                    $("#totalPages").html(data.aopPageInfo.pages);//总页数
+                    $("#totals").html(data.aopPageInfo.total);//总条数
+                    let pageInfo = "";
+                    if (data.aopPageInfo.isFirstPage === true) {
+                        pageInfo += "<a>首页</a>";
+                    } else {
+                        pageInfo += '<a href="javascript:void(0);" onclick="query(' + data.aopPageInfo.navigateFirstPage + ')">首页</a>';
+                        //pageInfo += '<a onclick="query(' + data.aopPageInfo.navigateFirstPage + ')">首页</a>';
+                    }
+                    if (data.aopPageInfo.hasPreviousPage === true) {
+                        pageInfo += '<a href="javascript:void(0);" onclick="query(' + data.aopPageInfo.prePage + ')">上一页</a>';
+                        //pageInfo += '<a onclick="query(' + data.aopPageInfo.prePage + ')">上一页</a>';
+                    } else {
+                        pageInfo += "<a>上一页</a>";
+                    }
+                    if (data.aopPageInfo.hasNextPage === true) {
+                        pageInfo += '<a href="javascript:void(0);" onclick="query(' + data.aopPageInfo.nextPage + ')">下一页</a>';
+                        //pageInfo += '<a onclick="query(' + data.aopPageInfo.nextPage + ')">下一页</a>';
+                    } else {
+                        pageInfo += "<a>下一页</a>";
+                    }
+                    if (data.aopPageInfo.isLastPage === true) {
+                        pageInfo += "<a>末页</a>";
+                    } else {
+                        pageInfo += '<a href="javascript:void(0);" onclick="query(' + data.aopPageInfo.navigateLastPage + ')">末页</a>';
+                        //pageInfo += '<a onclick="query(' + data.aopPageInfo.navigateLastPage + ')">末页</a>';
+                    }
+                    $("#page").html(pageInfo);
                 },
                 error: function (e) {
                     console.log("数据获取失败:" + e);
-                    //alert("Error!" + e);
                     $.messager.alert('错误', e, 'error');
                 }
             });
@@ -85,28 +111,27 @@
                 </div>
                 <tr>
                     <td height="30">
-                        <form action="<%=path %>/admin/getAopList" method="post">
+                        <form method="post">
                             <div align="center">
                                 <label>
                                     姓名：
-                                    <input type="text" id="name" name="name" value="${name }"
+                                    <input type="text" id="name" name="name"
                                            style="width: 150px" placeholder="请输入姓名"/>
                                 </label>
                                 <label>
                                     起始时间：
-                                    <input type="text" id="beginTime" name="beginTime" value="${beginTime }"
+                                    <input type="text" id="beginTime" name="beginTime"
                                            style="width: 150px" class="Wdate"
                                            onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false,readOnly:true,maxDate:'#F{$dp.$D(\'endTime\')}'})"/>
                                 </label>
                                 <label>
                                     结束时间：
-                                    <input type="text" id="endTime" name="endTime" value="${endTime }"
+                                    <input type="text" id="endTime" name="endTime"
                                            style="width: 150px" class="Wdate"
                                            onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false,readOnly:true,minDate:'#F{$dp.$D(\'beginTime\')}',maxDate:'%y-%M-%d %H:%m:%s'})"/>
                                 </label>
                                 <label>
-                                    <%--<input type="submit" value="查 询" onclick="query();return false;"/>--%>
-                                    <input type="submit" value="查 询"/>
+                                    <input type="submit" value="查 询" onclick="query();return false;"/>
                                 </label>
                             </div>
                         </form>
@@ -135,71 +160,17 @@
                 <tbody id="tbody">
 
                 </tbody>
-                <%--<c:forEach items="${aopPageInfo.list }" var="aop">
-                    <tr align="center">
-                        <td height="30">${aop.name }</td>
-                        <td>${aop.date }</td>
-                        <td>${aop.event }</td>
-                    </tr>
-                </c:forEach>--%>
             </table>
         </td>
     </tr>
 </table>
 <div align="center">
     <p>
-        当前 <span id="curPage"></span> 页,总 <span id="totalPages"></span> 页,总 <span id="totals"></span> 条记录
+        当前第 <span id="curPage"></span> 页,共 <span id="totalPages"></span> 页,共 <span id="totals"></span> 条记录
     </p>
-    <%--<p>
-        <c:choose>
-            <c:when test="${aopPageInfo != null }">
-                当前 ${aopPageInfo.pageNum } 页,总 ${aopPageInfo.pages } 页,总 ${aopPageInfo.total } 条记录
-            </c:when>
-            <c:otherwise>
-                当前 0 页,总 0 页,总 0 条记录
-            </c:otherwise>
-        </c:choose>
-    </p>--%>
-    <%--<c:if test="${aopPageInfo.pageNum>1 }">
-        <a href="${pageContext.request.contextPath}/admin/getAopList?currentPage=1&name=${name }&beginTime=${beginTime }&endTime=${endTime }">
-            首页
-        </a>
-        <a href="${pageContext.request.contextPath}/admin/getAopList?currentPage=${aopPageInfo.pageNum-1 }&name=${name }&beginTime=${beginTime }&endTime=${endTime }">
-            上一页
-        </a>
-    </c:if>
-    <c:if test="${aopPageInfo.pageNum<=1 }">
-        首页 上一页
-    </c:if>
-    <c:choose>
-        <c:when test="${aopPageInfo.pageNum<aopPageInfo.pages }">
-            <a href="${pageContext.request.contextPath}/admin/getAopList?currentPage=${aopPageInfo.pageNum+1 }&name=${name }&beginTime=${beginTime }&endTime=${endTime }">
-                下一页
-            </a>
-            <a href="${pageContext.request.contextPath}/admin/getAopList?currentPage=${aopPageInfo.pages }&name=${name }&beginTime=${beginTime }&endTime=${endTime }">
-                末页
-            </a>
-        </c:when>
-        <c:otherwise>
-            下一页 末页
-        </c:otherwise>
-    </c:choose>--%>
-    <%--<c:if test="${aopPageInfo.isFirstPage==true}"><a>首页</a> </c:if>
-    <c:if test="${aopPageInfo.isFirstPage==false}">
-        <a href="${pageContext.request.contextPath}/admin/getAopList?currentPage=${aopPageInfo.navigateFirstPage}&name=${name}&beginTime=${beginTime}&endTime=${endTime}">首页</a>
-    </c:if>
-    <c:if test="${aopPageInfo.hasPreviousPage==true}">
-        <a href="${pageContext.request.contextPath}/admin/getAopList?currentPage=${aopPageInfo.prePage}&name=${name}&beginTime=${beginTime}&endTime=${endTime}">上一页</a>
-    </c:if>
-    <c:if test="${aopPageInfo.hasPreviousPage==false}"><a>上一页</a> </c:if>
-    <c:if test="${aopPageInfo.hasNextPage==true}">
-        <a href="${pageContext.request.contextPath}/admin/getAopList?currentPage=${aopPageInfo.nextPage}&name=${name}&beginTime=${beginTime}&endTime=${endTime}">下一页</a>
-    </c:if>
-    <c:if test="${aopPageInfo.hasNextPage==false}"><a>下一页</a> </c:if>
-    <c:if test="${aopPageInfo.isLastPage==true}"><a>末页</a> </c:if>
-    <c:if test="${aopPageInfo.isLastPage==false}">
-        <a href="${pageContext.request.contextPath}/admin/getAopList?currentPage=${aopPageInfo.navigateLastPage}&name=${name}&beginTime=${beginTime}&endTime=${endTime}">末页</a>
-    </c:if>--%>
+    <p id="page">
+
+    </p>
 </div>
 </body>
 </html> 

@@ -22,35 +22,6 @@
                 $("#endTime").val(moment(new Date()).format("YYYY-MM-DD HH:mm:ss"));
             }
         });
-
-        function query() {
-            let name = $("#name").val();
-            let beginTime = $("#beginTime").val();
-            let endTime = $("#endTime").val();
-            $.ajax({
-                type: "post",
-                dataType: "json",
-                url: "${pageContext.request.contextPath }/admin/getAopList",
-                data: {
-                    "name": name,
-                    "beginTime": beginTime,
-                    "endTime": endTime
-                },
-                success: function (data) {
-                    debugger;
-                    if (data.warn) {
-                        document.getElementById("warn").innerHTML = data.warn;
-                        document.getElementById("userpwd").value = "";
-                    } else {
-                        window.location.href = "${pageContext.request.contextPath}/login/goIndex";
-                    }
-                },
-                error: function (e) {
-                    console.log("数据获取失败:" + e);
-                    alert("Error!" + e);
-                }
-            });
-        }
     </script>
 </head>
 <body leftMargin="0" topMargin="0" marginwidth="0" marginheight="0">
@@ -77,7 +48,7 @@
                 </div>
                 <tr>
                     <td height="30">
-                        <form action="<%=path %>/admin/getAopList" method="post">
+                        <form action="<%=path %>/admin/getAopList1" method="post">
                             <div align="center">
                                 <label>
                                     姓名：
@@ -139,18 +110,18 @@
     <p>
         <c:choose>
             <c:when test="${aopPageInfo != null }">
-                当前 ${aopPageInfo.pageNum } 页,总 ${aopPageInfo.pages } 页,总 ${aopPageInfo.total } 条记录
+                当前第 ${aopPageInfo.pageNum } 页,共 ${aopPageInfo.pages } 页,共 ${aopPageInfo.total } 条记录
             </c:when>
             <c:otherwise>
-                当前 0 页,总 0 页,总 0 条记录
+                当前第 0 页,共 0 页,共 0 条记录
             </c:otherwise>
         </c:choose>
     </p>
     <%--<c:if test="${aopPageInfo.pageNum>1 }">
-        <a href="${pageContext.request.contextPath}/admin/getAopList?currentPage=1&name=${name }&beginTime=${beginTime }&endTime=${endTime }">
+        <a href="${pageContext.request.contextPath}/admin/getAopList1?currentPage=1&name=${name }&beginTime=${beginTime }&endTime=${endTime }">
             首页
         </a>
-        <a href="${pageContext.request.contextPath}/admin/getAopList?currentPage=${aopPageInfo.pageNum-1 }&name=${name }&beginTime=${beginTime }&endTime=${endTime }">
+        <a href="${pageContext.request.contextPath}/admin/getAopList1?currentPage=${aopPageInfo.pageNum-1 }&name=${name }&beginTime=${beginTime }&endTime=${endTime }">
             上一页
         </a>
     </c:if>
@@ -159,10 +130,10 @@
     </c:if>
     <c:choose>
         <c:when test="${aopPageInfo.pageNum<aopPageInfo.pages }">
-            <a href="${pageContext.request.contextPath}/admin/getAopList?currentPage=${aopPageInfo.pageNum+1 }&name=${name }&beginTime=${beginTime }&endTime=${endTime }">
+            <a href="${pageContext.request.contextPath}/admin/getAopList1?currentPage=${aopPageInfo.pageNum+1 }&name=${name }&beginTime=${beginTime }&endTime=${endTime }">
                 下一页
             </a>
-            <a href="${pageContext.request.contextPath}/admin/getAopList?currentPage=${aopPageInfo.pages }&name=${name }&beginTime=${beginTime }&endTime=${endTime }">
+            <a href="${pageContext.request.contextPath}/admin/getAopList1?currentPage=${aopPageInfo.pages }&name=${name }&beginTime=${beginTime }&endTime=${endTime }">
                 末页
             </a>
         </c:when>
@@ -172,19 +143,19 @@
     </c:choose>--%>
     <c:if test="${aopPageInfo.isFirstPage==true}"><a>首页</a> </c:if>
     <c:if test="${aopPageInfo.isFirstPage==false}">
-        <a href="${pageContext.request.contextPath}/admin/getAopList?currentPage=${aopPageInfo.navigateFirstPage}&name=${name}&beginTime=${beginTime}&endTime=${endTime}">首页</a>
+        <a href="${pageContext.request.contextPath}/admin/getAopList1?currentPage=${aopPageInfo.navigateFirstPage}&name=${name}&beginTime=${beginTime}&endTime=${endTime}">首页</a>
     </c:if>
     <c:if test="${aopPageInfo.hasPreviousPage==true}">
-        <a href="${pageContext.request.contextPath}/admin/getAopList?currentPage=${aopPageInfo.prePage}&name=${name}&beginTime=${beginTime}&endTime=${endTime}">上一页</a>
+        <a href="${pageContext.request.contextPath}/admin/getAopList1?currentPage=${aopPageInfo.prePage}&name=${name}&beginTime=${beginTime}&endTime=${endTime}">上一页</a>
     </c:if>
     <c:if test="${aopPageInfo.hasPreviousPage==false}"><a>上一页</a> </c:if>
     <c:if test="${aopPageInfo.hasNextPage==true}">
-        <a href="${pageContext.request.contextPath}/admin/getAopList?currentPage=${aopPageInfo.nextPage}&name=${name}&beginTime=${beginTime}&endTime=${endTime}">下一页</a>
+        <a href="${pageContext.request.contextPath}/admin/getAopList1?currentPage=${aopPageInfo.nextPage}&name=${name}&beginTime=${beginTime}&endTime=${endTime}">下一页</a>
     </c:if>
     <c:if test="${aopPageInfo.hasNextPage==false}"><a>下一页</a> </c:if>
     <c:if test="${aopPageInfo.isLastPage==true}"><a>末页</a> </c:if>
     <c:if test="${aopPageInfo.isLastPage==false}">
-        <a href="${pageContext.request.contextPath}/admin/getAopList?currentPage=${aopPageInfo.navigateLastPage}&name=${name}&beginTime=${beginTime}&endTime=${endTime}">末页</a>
+        <a href="${pageContext.request.contextPath}/admin/getAopList1?currentPage=${aopPageInfo.navigateLastPage}&name=${name}&beginTime=${beginTime}&endTime=${endTime}">末页</a>
     </c:if>
 </div>
 </body>
