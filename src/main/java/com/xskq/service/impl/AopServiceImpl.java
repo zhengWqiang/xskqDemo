@@ -32,12 +32,12 @@ public class AopServiceImpl implements AopService {
     }
 
     @Override
-    public List<Aop> getAop(String name, int pageindex, int pagesize, String beginTime, String endTime) {
+    public List<Aop> getAop(String name, String beginTime, String endTime) {
         return aopMapper.getAop(name, beginTime, endTime);
     }
 
     @Override
-    public HSSFWorkbook getExcel(String name, Date beginTime, Date endTime) {
+    public HSSFWorkbook getExcel(String name, String beginTime, String endTime) {
         //创建Hssfworkbook对象（Excel的文档对象）
         HSSFWorkbook hw = new HSSFWorkbook();
         //建立新的sheet对象（Excel的表单）
@@ -65,16 +65,8 @@ public class AopServiceImpl implements AopService {
         row2.createCell(1).setCellValue("操作者");
         row2.createCell(2).setCellValue("时间");
         row2.createCell(3).setCellValue("事件");
-        String beginTimeStr = null;
-        if (beginTime != null) {
-            beginTimeStr = DateUtils.dateToStrTime(beginTime);
-        }
-        String endTimeStr = null;
-        if (beginTime != null) {
-            endTimeStr = DateUtils.dateToStrTime(endTime);
-        }
         //导出excel从第一页开始，所以写1
-        List<Aop> aoplist = aopMapper.getAop(name, beginTimeStr, endTimeStr);
+        List<Aop> aoplist = aopMapper.getAop(name, beginTime, endTime);
         for (int i = 0; i < aoplist.size(); i++) {
             Aop a = aoplist.get(i);
             HSSFRow row = sheet.createRow(2 + i);

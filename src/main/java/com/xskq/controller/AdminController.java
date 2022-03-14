@@ -17,6 +17,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -124,7 +125,7 @@ public class AdminController {
             currentPage = 1;
         }
         PageHelper.startPage(currentPage, pageSize);
-        List<Aop> aopList = aopservice.getAop(name, currentPage, pageSize, beginTime, beginTime);
+        List<Aop> aopList = aopservice.getAop(name, beginTime, endTime);
         PageInfo<Aop> aopPageInfo = new PageInfo<>(aopList);
         /*mv.addObject("aopPageInfo", aopPageInfo);
         mv.addObject("beginTime", beginTime);
@@ -147,7 +148,7 @@ public class AdminController {
             currentPage = 1;
         }
         PageHelper.startPage(currentPage, pageSize);
-        List<Aop> aopList = aopservice.getAop(name, currentPage, pageSize, beginTime, beginTime);
+        List<Aop> aopList = aopservice.getAop(name, beginTime, endTime);
         PageInfo<Aop> aopPageInfo = new PageInfo<>(aopList);
         /*mv.addObject("aopPageInfo", aopPageInfo);
         mv.addObject("beginTime", beginTime);
@@ -165,13 +166,22 @@ public class AdminController {
 
     @RequestMapping(value = "/getExcel")
     @ResponseBody
-    public void getExcel(String name, Date begintime, Date endtime) throws Exception {
-        HSSFWorkbook workbook = aopservice.getExcel(name, begintime, endtime);
-        ByteArrayOutputStream output = new ByteArrayOutputStream();
+    public void getExcel(HttpServletResponse response, String name, String beginTime, String endTime) throws Exception {
+        HSSFWorkbook workbook = aopservice.getExcel(name, beginTime, endTime);
+        OutputStream outputStream = response.getOutputStream();
+        response.reset();
+        response.setContentType("application/vnd.ms-excel");
+        //response.setHeader("Content-disposition", "attachment;filename="+new String(fileNames[0].getBytes("gbk"),"iso8859-1")+".xls");
+        workbook.write(outputStream);
+        outputStream.flush();
+        outputStream.close();
+        workbook.close();
+
+        /*ByteArrayOutputStream output = new ByteArrayOutputStream();
         workbook.write(output);
         byte[] ba = output.toByteArray();
         InputStream excelFile = new ByteArrayInputStream(ba);
         output.flush();
-        output.close();
+        output.close();*/
     }
 }

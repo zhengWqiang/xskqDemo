@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface AopService {
 	int addAop(Aop aop);
-	List<Aop> getAop(String name, int pageindex, int pagesize, String beginTime, String endTime);
-	HSSFWorkbook getExcel(String name, Date begintime, Date endtime);
+	List<Aop> getAop(String name, String beginTime, String endTime);
+	HSSFWorkbook getExcel(String name, String beginTime, String endTime);
 }

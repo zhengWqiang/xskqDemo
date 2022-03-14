@@ -85,6 +85,14 @@
                 }
             });
         }
+
+        function excel() {
+            debugger;
+            let name = $("#name").val();
+            let beginTime = $("#beginTime").val();
+            let endTime = $("#endTime").val();
+            window.location.href = "${pageContext.request.contextPath }/admin/getExcel?name=" + name + "&beginTime=" + beginTime + "&endTime=" + endTime;
+        }
     </script>
 </head>
 <body leftMargin="0" topMargin="0" marginwidth="0" marginheight="0">
@@ -104,7 +112,7 @@
                 <div>
                     <ul class="toolbar">
                         <li>
-                            <a href="${pageContext.request.contextPath }/admin/excel?name=${name }&beginTime=${beginTime }&endTime=${endTime }">
+                            <a href="javascript:void(0);" onclick="excel()">
                                 <span><img src="${pageContext.request.contextPath }/ncss/images/f05.png"/></span>导出</a>
                         </li>
                     </ul>

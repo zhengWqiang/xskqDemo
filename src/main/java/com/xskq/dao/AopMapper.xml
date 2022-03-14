@@ -91,7 +91,7 @@
         and date >= #{beginTime}
       </if>
       <if test="endTime != null and endTime != ''">
-        and date >= #{endTime}
+        and date &lt;= #{endTime}
       </if>
     </where>
   </select>
