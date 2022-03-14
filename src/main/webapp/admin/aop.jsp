@@ -53,21 +53,24 @@
                     $("#totalPages").html(data.aopPageInfo.pages);//总页数
                     $("#totals").html(data.aopPageInfo.total);//总条数
                     let pageInfo = "";
-                    if (data.aopPageInfo.isFirstPage === true) {
+                    //无数据时，isFirstPage=false,isLastPage=true
+                    /*if (data.aopPageInfo.isFirstPage === true) {
                         pageInfo += "<a>首页</a>";
                     } else {
                         pageInfo += '<a href="javascript:void(0);" onclick="query(' + data.aopPageInfo.navigateFirstPage + ')">首页</a>';
-                        //pageInfo += '<a onclick="query(' + data.aopPageInfo.navigateFirstPage + ')">首页</a>';
+                    }*/
+                    if (data.aopPageInfo.pageNum > 1) {
+                        pageInfo += '<a href="javascript:void(0);" onclick="query(' + data.aopPageInfo.navigateFirstPage + ')">首页</a>';
+                    } else {
+                        pageInfo += "<a>首页</a>";
                     }
                     if (data.aopPageInfo.hasPreviousPage === true) {
                         pageInfo += '<a href="javascript:void(0);" onclick="query(' + data.aopPageInfo.prePage + ')">上一页</a>';
-                        //pageInfo += '<a onclick="query(' + data.aopPageInfo.prePage + ')">上一页</a>';
                     } else {
                         pageInfo += "<a>上一页</a>";
                     }
                     if (data.aopPageInfo.hasNextPage === true) {
                         pageInfo += '<a href="javascript:void(0);" onclick="query(' + data.aopPageInfo.nextPage + ')">下一页</a>';
-                        //pageInfo += '<a onclick="query(' + data.aopPageInfo.nextPage + ')">下一页</a>';
                     } else {
                         pageInfo += "<a>下一页</a>";
                     }
