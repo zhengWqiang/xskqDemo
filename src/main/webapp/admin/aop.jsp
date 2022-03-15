@@ -94,7 +94,8 @@
             let name = $("#name").val();
             let beginTime = $("#beginTime").val();
             let endTime = $("#endTime").val();
-            window.location.href = "${pageContext.request.contextPath }/admin/getExcel?name=" + name + "&beginTime=" + beginTime + "&endTime=" + endTime;
+            window.location.href = "${pageContext.request.contextPath }/admin/getExcel?name=" + name + "&beginTime="
+                + beginTime + "&endTime=" + endTime + "&fileName=日志列表";
         }
     </script>
 </head>

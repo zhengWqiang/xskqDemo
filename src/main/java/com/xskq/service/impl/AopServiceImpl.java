@@ -65,7 +65,6 @@ public class AopServiceImpl implements AopService {
         row2.createCell(1).setCellValue("操作者");
         row2.createCell(2).setCellValue("时间");
         row2.createCell(3).setCellValue("事件");
-        //导出excel从第一页开始，所以写1
         List<Aop> aoplist = aopMapper.getAop(name, beginTime, endTime);
         for (int i = 0; i < aoplist.size(); i++) {
             Aop a = aoplist.get(i);

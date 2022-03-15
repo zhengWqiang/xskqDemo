@@ -24,8 +24,18 @@
     <!-- 配置视图解析器 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <!-- 前缀 -->
-        <property name="prefix" value="/" />
+        <property name="prefix" value="/"/>
         <!-- 后缀 -->
-        <property name="suffix" value=".jsp" />
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!-- 文件上传支持-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 文件上传头部编码，默认是iso-8859-1，注意defaultEncoding必须和用户的jsp的pageEncoding属性一致，以便能正常读取文件 -->
+        <property name="defaultEncoding" value="utf-8"/>
+        <!-- 上传文件大小限制为30M，30*1024*1024 -->
+        <property name="maxUploadSize" value="31457280"/>
+        <!-- 读取文件到内存中最大的字节数 -->
+        <property name="maxInMemorySize" value="4096"/>
     </bean>
 </beans>

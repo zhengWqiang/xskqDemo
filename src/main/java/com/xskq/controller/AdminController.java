@@ -166,22 +166,16 @@ public class AdminController {
 
     @RequestMapping(value = "/getExcel")
     @ResponseBody
-    public void getExcel(HttpServletResponse response, String name, String beginTime, String endTime) throws Exception {
+    public void getExcel(HttpServletResponse response, String name, String beginTime, String endTime,
+                         String fileName) throws Exception {
         HSSFWorkbook workbook = aopservice.getExcel(name, beginTime, endTime);
         OutputStream outputStream = response.getOutputStream();
         response.reset();
         response.setContentType("application/vnd.ms-excel");
-        //response.setHeader("Content-disposition", "attachment;filename="+new String(fileNames[0].getBytes("gbk"),"iso8859-1")+".xls");
+        response.setHeader("Content-disposition", "attachment;filename=" + new String(fileName.getBytes(), "iso8859-1") + ".xls");
         workbook.write(outputStream);
         outputStream.flush();
         outputStream.close();
         workbook.close();
-
-        /*ByteArrayOutputStream output = new ByteArrayOutputStream();
-        workbook.write(output);
-        byte[] ba = output.toByteArray();
-        InputStream excelFile = new ByteArrayInputStream(ba);
-        output.flush();
-        output.close();*/
     }
 }
